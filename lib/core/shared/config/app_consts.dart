@@ -2,8 +2,6 @@
 class AppConsts {
   AppConsts._();
 
-  static const String abbrOrganization = 'SBS';
-  static const String organization = 'Systematic Business Solution Co.,Ltd.';
   static const String author = 'Kyaw Zayar Tun';
 
   static const double containerRadius = 8;
@@ -34,8 +32,15 @@ class AppConsts {
 class _Endpoints {
   _Endpoints._();
 
+  // Auth
   final String userCreate = '/User/CreateUser';
   final String userLogin = '/User/LoginUser';
+
+  // Category
+  final String category = '/PostCategory';
+
+  // Post
+  final String post = '/Post';
 }
 
 class _Status {
