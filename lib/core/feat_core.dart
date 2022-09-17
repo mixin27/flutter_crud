@@ -15,8 +15,14 @@ export 'shared/helpers/app_utils.dart';
 export 'shared/providers/core_providers.dart';
 export 'shared/providers/theme_providers.dart';
 
+// infrastructure
+export 'infrastructure/response_dto.dart';
+
 // presentation
 export 'presentation/app_logo.dart';
 
 // presentation/button
 export 'presentation/button/app_state_button.dart';
+
+// presentation/dialo
+export 'presentation/dialog/app_dialog_box.dart';
