@@ -1,11 +1,10 @@
 import 'package:flutter_crud/blog/feat_blog.dart';
+import 'package:flutter_crud/core/feat_core.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:smf_core/smf_core.dart';
 
 part 'category_dto.freezed.dart';
 part 'category_dto.g.dart';
-
-bool boolFromJson(Object? json) => (json as bool?) ?? false;
 
 @freezed
 class CategoryDto with _$CategoryDto {
