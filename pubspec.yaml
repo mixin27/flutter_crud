@@ -17,6 +17,13 @@ dependencies:
   dartz: ^0.10.1
   form_field_validator: ^1.1.0
   smf_core: ^1.0.1
+  carousel_slider: ^4.1.1
+  smooth_page_indicator: ^1.0.0+2
+  google_fonts: ^3.0.1
+  flutter_vector_icons: ^2.0.0
+  cached_network_image: ^3.2.2
+  image_picker: ^0.8.5+3
+  path_drawing: ^1.0.1
 
   # routing and navigation
   auto_route: ^5.0.1
