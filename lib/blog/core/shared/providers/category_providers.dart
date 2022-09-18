@@ -59,3 +59,7 @@ final categoryListProvider = StateProvider<List<CategoryModel>>(
         },
       ),
 );
+
+final allNewsCategoryProvider = Provider<CategoryModel>(
+  (ref) => ref.watch(categoryListProvider).first,
+);

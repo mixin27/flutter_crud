@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:smf_core/smf_core.dart';
 
 part 'post_model.freezed.dart';
 
@@ -21,4 +22,6 @@ class PostModel with _$PostModel {
     required String updatedBy,
     required bool active,
   }) = _PostModel;
+
+  DateTime? get publishedOn => date.toDateTime();
 }

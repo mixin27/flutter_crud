@@ -26,7 +26,7 @@ class ErrorPlaceholderWidget extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         Text(
-          message ?? 'Something went wrong.',
+          message ?? '',
           style: Theme.of(context).textTheme.titleMedium,
         ),
         if (onPressed != null) const SizedBox(height: 10),

@@ -37,9 +37,10 @@ class GetAllPostsNotifier extends StateNotifier<GetAllPostsState> {
   int _page = 0;
 
   @protected
-  void resetState() {
+  Future<void> resetState() async {
     _page = 0;
     state = const GetAllPostsState.initial(PaginatedResult(entity: []));
+    await Future.delayed(const Duration(milliseconds: 200));
   }
 
   Future<void> getFirstPage({
@@ -48,7 +49,7 @@ class GetAllPostsNotifier extends StateNotifier<GetAllPostsState> {
     String? status,
     String? searchText,
   }) async {
-    resetState();
+    await resetState();
     await getNextPage(
       categoryId: categoryId,
       userId: userId,

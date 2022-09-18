@@ -116,10 +116,12 @@ class _HomePageState extends ConsumerState<HomePage>
               children: List.generate(
                 sortedCategories.length,
                 (index) {
-                  if (index == 0) return const Text('All News');
-
                   final category = sortedCategories.elementAt(index);
-                  return Text(category.name);
+
+                  if (index == 0) {
+                    return const AllPostsList();
+                  }
+                  return CategoryPostList(categoryId: category.id);
                 },
               ),
             ),
