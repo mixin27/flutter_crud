@@ -44,7 +44,7 @@ class AppWidget extends ConsumerWidget {
       next.maybeWhen(
         orElse: () {},
         authenticated: () {
-          _appRouter.replaceAll([const EmptyAccountRoute()]);
+          _appRouter.replaceAll([const EmptyHomeRoute()]);
         },
         unauthenticated: () {
           _appRouter.replaceAll([const EmptyAuthRoute()]);

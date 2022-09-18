@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_crud/core/feat_core.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 /// Application themes are defined here.
 class AppTheme {
@@ -7,7 +8,7 @@ class AppTheme {
 
   static ThemeData get light => ThemeData(
         // useMaterial3: true,
-        fontFamily: AppConsts.mainFontMM,
+        fontFamily: GoogleFonts.openSans().fontFamily,
         colorScheme: AppColors.lightColorSchemaFromSeed,
 
         // Elevated button
@@ -56,7 +57,7 @@ class AppTheme {
 
   static ThemeData get dark => ThemeData(
         // useMaterial3: true,
-        fontFamily: AppConsts.mainFontMM,
+        fontFamily: GoogleFonts.openSans().fontFamily,
         colorScheme: AppColors.darkColorSchemaFromSeed,
 
         // Elevated button

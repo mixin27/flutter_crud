@@ -6,11 +6,13 @@ import 'package:smf_core/smf_core.dart';
 /// We use a simple StateProvider to toggle application ThemeMode.
 final StateProvider<ThemeMode> themeModeProvider =
     StateProvider<ThemeMode>((StateProviderRef<ThemeMode> ref) {
+  // ignore: unused_local_variable
   final bool isDarkMode = getBoolAsync(
     AppConsts.prefsDarkMode,
     defaultValue: false,
   );
-  return isDarkMode ? ThemeMode.dark : ThemeMode.light;
+  return ThemeMode.dark;
+  // return isDarkMode ? ThemeMode.dark : ThemeMode.light;
 });
 
 /// The light [ThemeData] provider.
