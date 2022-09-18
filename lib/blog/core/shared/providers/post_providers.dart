@@ -31,3 +31,10 @@ final getAllPostsNotifierProvider =
     ref.watch(postRepositoryProvider),
   ),
 );
+
+final createPostLoading = StateProvider(
+  (ref) => ref.watch(createPostNotifierProvider).maybeWhen(
+        orElse: () => false,
+        loading: () => true,
+      ),
+);

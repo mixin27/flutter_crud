@@ -15,3 +15,4 @@ export 'presentation/category_list_page.dart';
 export 'presentation/add_new_category_page.dart';
 
 export 'presentation/widgets/add_category_button.dart';
+export 'presentation/widgets/category_chooser.dart';

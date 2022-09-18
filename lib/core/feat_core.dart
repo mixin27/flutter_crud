@@ -30,3 +30,5 @@ export 'presentation/button/app_state_button.dart';
 
 // presentation/dialog
 export 'presentation/dialog/app_dialog_box.dart';
+export 'presentation/dialog/app_modal_bottom_sheet.dart';
+export 'presentation/dialog/dismissible_widget.dart';

@@ -60,7 +60,7 @@ class _CategoryPostListState extends ConsumerState<CategoryPostList> {
           physics: const BouncingScrollPhysics(
             parent: AlwaysScrollableScrollPhysics(),
           ),
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(vertical: 20),
           itemCount: _.posts.entity.length,
           separatorBuilder: (context, index) => const Divider(),
           itemBuilder: (context, index) {

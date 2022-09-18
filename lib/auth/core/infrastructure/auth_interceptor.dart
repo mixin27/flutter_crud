@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_crud/auth/feat_auth.dart';
+import 'package:smf_core/smf_core.dart';
 
 class AuthInterceptor extends Interceptor {
   final UserAuthenticator _authenticator;
@@ -7,6 +8,8 @@ class AuthInterceptor extends Interceptor {
   final Dio _dio;
 
   AuthInterceptor(this._authenticator, this._authNotifier, this._dio);
+
+  static const String tag = 'AuthInterceptor';
 
   @override
   void onRequest(
@@ -19,9 +22,12 @@ class AuthInterceptor extends Interceptor {
         credential == null
             ? {}
             : {
-                'Authorization': 'bearer ${credential.token}',
+                'Authorization': 'Bearer ${credential.token}',
               },
       );
+
+    Logger.clap(tag, 'RequestBody: ${modifiedOptions.data}');
+    Logger.clap(tag, 'QueryParameters: ${modifiedOptions.queryParameters}');
 
     handler.next(modifiedOptions);
   }
@@ -29,6 +35,8 @@ class AuthInterceptor extends Interceptor {
   @override
   void onError(DioError err, ErrorInterceptorHandler handler) async {
     final errorResponse = err.response;
+    Logger.e(tag, errorResponse);
+
     if (errorResponse != null && errorResponse.statusCode == 401) {
       final credentials = await _authenticator.getSignedInCredential();
 
@@ -44,7 +52,7 @@ class AuthInterceptor extends Interceptor {
         handler.resolve(
           await _dio.fetch(
             errorResponse.requestOptions
-              ..headers['Authorization'] = 'bearer ${refreshCredentials.token}',
+              ..headers['Authorization'] = 'Bearer ${refreshCredentials.token}',
           ),
         );
       }

@@ -15,3 +15,4 @@ export 'application/create_post_notifier.dart';
 
 export 'presentation/all_posts_list.dart';
 export 'presentation/category_post_list.dart';
+export 'presentation/new_post_page.dart';

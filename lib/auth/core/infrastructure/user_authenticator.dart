@@ -23,7 +23,6 @@ class UserAuthenticator {
 
       if (storedCredential != null) {
         // refresh token
-        Logger.d(tag, 'token: ${storedCredential.token}');
       }
 
       return storedCredential;

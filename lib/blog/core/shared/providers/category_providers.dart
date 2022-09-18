@@ -39,27 +39,40 @@ final createLoadingProvider = StateProvider<bool>(
       ),
 );
 
-final categoryListProvider = StateProvider<List<CategoryModel>>(
+final sortedCategoryListProvider = StateProvider<List<CategoryModel>>(
   (ref) => ref.watch(getAllCategoriesNotifierProvider).maybeWhen(
         orElse: () => [],
         success: (categories) {
-          const all = CategoryModel(
-            id: '',
-            name: 'All News',
-            createdAt: '',
-            createdBy: '',
-            updatedAt: '',
-            updatedBy: '',
-            active: true,
-          );
           List<CategoryModel> items = [...categories];
           items.sort((a, b) => a.name.compareTo(b.name));
-          items = [all, ...items];
           return items;
         },
       ),
 );
 
+final categoryListProvider = StateProvider<List<CategoryModel>>(
+  (ref) {
+    List<CategoryModel> sortedCategories =
+        ref.watch(sortedCategoryListProvider);
+    const all = CategoryModel(
+      id: '',
+      name: 'All News',
+      createdAt: '',
+      createdBy: '',
+      updatedAt: '',
+      updatedBy: '',
+      active: true,
+    );
+    sortedCategories.sort((a, b) => a.name.compareTo(b.name));
+    sortedCategories = [all, ...sortedCategories];
+    return sortedCategories;
+  },
+);
+
 final allNewsCategoryProvider = Provider<CategoryModel>(
   (ref) => ref.watch(categoryListProvider).first,
+);
+
+final selectedCategoryProvider = StateProvider<CategoryModel?>(
+  (ref) => null,
 );

@@ -52,14 +52,16 @@ class PostRemoteService {
     required String categoryId,
   }) async {
     try {
+      final payload = {
+        "postTitle": title,
+        "postContent": content,
+        "postStatus": status,
+        "postCategoryID": categoryId,
+      };
+
       final response = await _dio.post(
         AppConsts.apiEndpoints.post,
-        data: {
-          "postTitle": title,
-          "postContent": content,
-          "postStatus": status,
-          "postCategoryID": categoryId,
-        },
+        data: payload,
       );
 
       if (response.statusCode == AppConsts.status.ok) {
