@@ -43,8 +43,18 @@ final categoryListProvider = StateProvider<List<CategoryModel>>(
   (ref) => ref.watch(getAllCategoriesNotifierProvider).maybeWhen(
         orElse: () => [],
         success: (categories) {
-          final items = [...categories];
+          const all = CategoryModel(
+            id: '',
+            name: 'All News',
+            createdAt: '',
+            createdBy: '',
+            updatedAt: '',
+            updatedBy: '',
+            active: true,
+          );
+          List<CategoryModel> items = [...categories];
           items.sort((a, b) => a.name.compareTo(b.name));
+          items = [all, ...items];
           return items;
         },
       ),

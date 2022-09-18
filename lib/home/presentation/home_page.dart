@@ -55,7 +55,7 @@ class _HomePageState extends ConsumerState<HomePage>
           orElse: () {},
           success: (_) {
             tabController = TabController(
-              length: _.categories.length,
+              length: _.categories.length + 1,
               vsync: this,
             );
           },
@@ -116,6 +116,8 @@ class _HomePageState extends ConsumerState<HomePage>
               children: List.generate(
                 sortedCategories.length,
                 (index) {
+                  if (index == 0) return const Text('All News');
+
                   final category = sortedCategories.elementAt(index);
                   return Text(category.name);
                 },
