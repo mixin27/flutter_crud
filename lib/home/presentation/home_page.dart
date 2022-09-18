@@ -72,6 +72,14 @@ class _HomePageState extends State<HomePage>
             ListTile(
               onTap: () {
                 _scaffoldKey.currentState!.closeDrawer();
+                context.router.push(const CategoryListRoute());
+              },
+              title: const Text('Categories'),
+            ),
+            const Divider(),
+            ListTile(
+              onTap: () {
+                _scaffoldKey.currentState!.closeDrawer();
               },
               title: const Text('Bookmark'),
             ),
