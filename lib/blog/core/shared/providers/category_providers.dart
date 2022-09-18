@@ -31,3 +31,10 @@ final createCategoryNotifierProvider =
     ref.watch(categoryRepositoryProvider),
   ),
 );
+
+final createLoadingProvider = StateProvider<bool>(
+  (ref) => ref.watch(createCategoryNotifierProvider).maybeWhen(
+        orElse: () => false,
+        loading: () => true,
+      ),
+);

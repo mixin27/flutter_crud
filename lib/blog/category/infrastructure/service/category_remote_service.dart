@@ -8,6 +8,8 @@ class CategoryRemoteService {
 
   CategoryRemoteService(this._dio);
 
+  static const String tag = 'CategoryRemoteService';
+
   /// Get all categories.
   ///
   /// Throw [RestApiException] when the request failed.
@@ -24,6 +26,7 @@ class CategoryRemoteService {
         throw RestApiException(response.statusCode, response.statusMessage);
       }
     } on DioError catch (e) {
+      Logger.e(tag, e);
       if (e.isNoConnectionError) {
         return const Result.noConnection();
       } else if (e.error != null) {

@@ -12,3 +12,6 @@ export 'application/get_all_cagetories_notifier.dart';
 
 export 'presentation/empty_category_page.dart';
 export 'presentation/category_list_page.dart';
+export 'presentation/add_new_category_page.dart';
+
+export 'presentation/widgets/add_category_button.dart';

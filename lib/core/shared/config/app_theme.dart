@@ -72,27 +72,6 @@ class AppTheme {
           ),
         ),
 
-        // Input decoration
-        inputDecorationTheme: InputDecorationTheme(
-          filled: true,
-          isDense: true,
-          border: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.grey.shade200,
-            ),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.grey.shade200,
-            ),
-          ),
-          disabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Colors.grey.shade200,
-            ),
-          ),
-        ),
-
         // Checkbox
         checkboxTheme: CheckboxThemeData(
           fillColor: MaterialStateProperty.all<Color>(

@@ -13,7 +13,7 @@ final initializationProvider = FutureProvider<Unit>(
     // initialization stuffs
     ref.read(dioProvider)
       ..options = BaseOptions(
-        baseUrl: '',
+        baseUrl: Env.uatBaseUrl,
         headers: {
           ApiUtils.keyAccept: ApiUtils.applicationJson,
           "apiKey": Env.apiKey,
