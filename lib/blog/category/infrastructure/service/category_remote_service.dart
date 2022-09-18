@@ -26,7 +26,7 @@ class CategoryRemoteService {
         throw RestApiException(response.statusCode, response.statusMessage);
       }
     } on DioError catch (e) {
-      Logger.e(tag, e);
+      Logger.e(tag, e.message);
       if (e.isNoConnectionError) {
         return const Result.noConnection();
       } else if (e.error != null) {
@@ -62,6 +62,7 @@ class CategoryRemoteService {
         throw RestApiException(response.statusCode, response.statusMessage);
       }
     } on DioError catch (e) {
+      Logger.e(tag, e.message);
       if (e.isNoConnectionError) {
         return const Result.noConnection();
       } else if (e.error != null) {

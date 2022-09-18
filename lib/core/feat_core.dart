@@ -21,6 +21,7 @@ export 'infrastructure/response_dto.dart';
 // presentation
 export 'presentation/app_logo.dart';
 export 'presentation/active_dot_indicator.dart';
+export 'presentation/error_placeholder_widget.dart';
 
 // presentation/button
 export 'presentation/button/app_state_button.dart';

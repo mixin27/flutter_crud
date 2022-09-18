@@ -1,4 +1,4 @@
-import 'package:flutter_crud/blog/category/feat_category.dart';
+import 'package:flutter_crud/blog/feat_blog.dart';
 import 'package:flutter_crud/core/feat_core.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -36,5 +36,16 @@ final createLoadingProvider = StateProvider<bool>(
   (ref) => ref.watch(createCategoryNotifierProvider).maybeWhen(
         orElse: () => false,
         loading: () => true,
+      ),
+);
+
+final categoryListProvider = StateProvider<List<CategoryModel>>(
+  (ref) => ref.watch(getAllCategoriesNotifierProvider).maybeWhen(
+        orElse: () => [],
+        success: (categories) {
+          final items = [...categories];
+          items.sort((a, b) => a.name.compareTo(b.name));
+          return items;
+        },
       ),
 );
