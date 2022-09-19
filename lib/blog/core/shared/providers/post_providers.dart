@@ -38,3 +38,24 @@ final createPostLoading = StateProvider(
         loading: () => true,
       ),
 );
+
+final getSinglePostNotifierProvider =
+    StateNotifierProvider<GetSinglePostNotifier, GetSinglePostState>(
+  (ref) => GetSinglePostNotifier(
+    ref.watch(postRepositoryProvider),
+  ),
+);
+
+final updatePostNotifierProvider =
+    StateNotifierProvider<UpdatePostNotifier, UpdatePostState>(
+  (ref) => UpdatePostNotifier(
+    ref.watch(postRepositoryProvider),
+  ),
+);
+
+final deletePostNotifierProvider =
+    StateNotifierProvider<DeletePostNotifier, DeletePostState>(
+  (ref) => DeletePostNotifier(
+    ref.watch(postRepositoryProvider),
+  ),
+);
