@@ -51,12 +51,10 @@ class UserAuthenticator {
         "EmailOrPhone": email,
         "Password": password,
       };
-      Logger.w(tag, payload);
-      Logger.w(tag, _dio.options.headers);
 
       final response = await _dio.post(
         AppConsts.apiEndpoints.userLogin,
-        queryParameters: payload,
+        data: payload,
         onSendProgress: (count, total) {
           Logger.d(tag, 'SendProgress: $count, $total');
         },
@@ -122,12 +120,10 @@ class UserAuthenticator {
         "PhoneNumber": phone,
         "Password": password,
       };
-      Logger.w(tag, payload);
-      Logger.w(tag, _dio.options.headers);
 
       final response = await _dio.post(
         AppConsts.apiEndpoints.userCreate,
-        queryParameters: payload,
+        data: payload,
       );
 
       if (response.statusCode == AppConsts.status.created ||

@@ -15,7 +15,7 @@ class PaginatedPostDto with _$PaginatedPostDto {
         required String totalPage,
     @JsonKey(name: 'currentPageNo', fromJson: stringFromJson)
         required String currentPageNo,
-    @JsonKey(name: 'postList', defaultValue: []) required List<PostDto> posts,
+    @JsonKey(name: 'dataList', defaultValue: []) required List<PostDto> posts,
   }) = _PaginatedPostDto;
 
   factory PaginatedPostDto.fromJson(Map<String, dynamic> json) =>

@@ -33,14 +33,14 @@ class _Endpoints {
   _Endpoints._();
 
   // Auth
-  final String userCreate = '/User/CreateUser';
-  final String userLogin = '/User/LoginUser';
+  final String userCreate = '/user/createUser';
+  final String userLogin = '/user/loginuser';
 
   // Category
-  final String category = '/PostCategory';
+  final String category = '/category';
 
   // Post
-  final String post = '/Post';
+  final String post = '/post';
 }
 
 class _Status {

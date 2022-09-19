@@ -46,7 +46,7 @@ class CategoryRemoteService {
     try {
       final response = await _dio.post(
         AppConsts.apiEndpoints.category,
-        queryParameters: {
+        data: {
           "PostCategoryName": name,
         },
       );
