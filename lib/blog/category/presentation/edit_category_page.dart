@@ -15,6 +15,9 @@ class EditCategoryPage extends StatelessWidget {
     return HideKeyboard(
       child: Scaffold(
         appBar: AppBar(
+          elevation: 0,
+          foregroundColor: Theme.of(context).colorScheme.onSurface,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           centerTitle: true,
           title: const Text(AppStrings.editCategory),
         ),
