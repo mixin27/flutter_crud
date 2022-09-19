@@ -41,6 +41,12 @@ class AppStrings {
   static const String deleteCategory = 'Delete Category';
   static const String categoryName = 'Category Name';
 
+  static const String articles = 'Articles';
+  static const String newArticle = 'New Article';
+  static const String createNewArticle = 'Create New Article';
+  static const String editArticle = 'Edit Article';
+  static const String deleteArticle = 'Delete Article';
+
   static const String delete = 'Delete';
   static const String update = 'Update';
   static const String save = 'Save';

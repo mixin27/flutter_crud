@@ -25,7 +25,9 @@ part 'app_router.gr.dart';
       path: '/home',
       children: [
         AutoRoute(page: HomePage, initial: true),
+        AutoRoute(page: PostDetailPage, path: 'articles/:id/detail'),
         AutoRoute(page: NewPostPage, path: 'articles/new'),
+        AutoRoute(page: EditPostPage, path: 'articles/edit'),
         AutoRoute(page: CategoryListPage, path: 'categories'),
         AutoRoute(page: AddNewCategoryPage, path: 'categories/new'),
         AutoRoute(page: EditCategoryPage, path: 'categories/edit'),

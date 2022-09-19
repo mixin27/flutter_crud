@@ -19,3 +19,5 @@ export 'application/delete_post_notifier.dart';
 export 'presentation/all_posts_list.dart';
 export 'presentation/category_post_list.dart';
 export 'presentation/new_post_page.dart';
+export 'presentation/edit_post_page.dart';
+export 'presentation/post_detail_page.dart';

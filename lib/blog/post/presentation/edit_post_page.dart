@@ -5,11 +5,39 @@ import 'package:flutter_crud/core/feat_core.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:smf_core/smf_core.dart';
 
-class NewPostPage extends ConsumerWidget {
-  const NewPostPage({Key? key}) : super(key: key);
+class EditPostPage extends ConsumerStatefulWidget {
+  const EditPostPage({Key? key, required this.post}) : super(key: key);
+
+  final PostModel post;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  _EditPostPageState createState() => _EditPostPageState();
+}
+
+class _EditPostPageState extends ConsumerState<EditPostPage> {
+  @override
+  void initState() {
+    init();
+    super.initState();
+  }
+
+  Future<void> init() async {
+    // getArticle();
+  }
+
+  Future<void> getArticle() async {
+    ref
+        .read(getSinglePostNotifierProvider.notifier)
+        .getPostById(id: widget.post.id);
+  }
+
+  @override
+  void setState(VoidCallback fn) {
+    if (mounted) super.setState(fn);
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
         ref.read(selectedCategoryProvider.notifier).state = null;
@@ -22,7 +50,7 @@ class NewPostPage extends ConsumerWidget {
             foregroundColor: Theme.of(context).colorScheme.onSurface,
             backgroundColor: Theme.of(context).colorScheme.surface,
             centerTitle: true,
-            title: const Text(AppStrings.createNewArticle),
+            title: const Text(AppStrings.editArticle),
           ),
           body: ListView(
             physics: const BouncingScrollPhysics(
@@ -31,34 +59,9 @@ class NewPostPage extends ConsumerWidget {
             padding: const EdgeInsets.symmetric(
               horizontal: 20,
             ),
-            children: const [
-              // const SizedBox(height: 20),
-              // InkWell(
-              //   onTap: () {},
-              //   child: Container(
-              //     height: 150,
-              //     decoration: BoxDecoration(
-              //       borderRadius: BorderRadius.circular(14),
-              //       color: Theme.of(context).colorScheme.primary.withOpacity(0.2),
-              //     ),
-              //     child: Row(
-              //       mainAxisAlignment: MainAxisAlignment.center,
-              //       children: [
-              //         const Icon(
-              //           Icons.add_photo_alternate_outlined,
-              //           size: 35,
-              //         ),
-              //         const SizedBox(width: 10),
-              //         Text(
-              //           'Add Article Cover',
-              //           style: Theme.of(context).textTheme.titleMedium,
-              //         ),
-              //       ],
-              //     ),
-              //   ),
-              // ),
-              SizedBox(height: 20),
-              NewArticleForm(),
+            children: [
+              const SizedBox(height: 20),
+              EditArticleForm(post: widget.post),
             ],
           ),
         ),
@@ -67,26 +70,45 @@ class NewPostPage extends ConsumerWidget {
   }
 }
 
-class NewArticleForm extends ConsumerStatefulWidget {
-  const NewArticleForm({
+class EditArticleForm extends ConsumerStatefulWidget {
+  const EditArticleForm({
     Key? key,
+    required this.post,
   }) : super(key: key);
 
+  final PostModel post;
+
   @override
-  _NewArticleFormState createState() => _NewArticleFormState();
+  _EditArticleFormState createState() => _EditArticleFormState();
 }
 
-class _NewArticleFormState extends ConsumerState<NewArticleForm> {
+class _EditArticleFormState extends ConsumerState<EditArticleForm> {
   final _formKey = GlobalKey<FormState>();
   final titleController = TextEditingController();
   final contentController = TextEditingController();
 
+  bool _isLoading = false;
+
   @override
   void initState() {
+    init();
     super.initState();
   }
 
-  Future<void> init() async {}
+  Future<void> init() async {
+    titleController.text = widget.post.title;
+    contentController.text = widget.post.content;
+
+    Future.microtask(() {
+      final categories = ref.watch(categoryListProvider);
+      final category = BlogHelpers.getCategory(
+        widget.post.categoryId,
+        categories,
+      );
+
+      ref.read(selectedCategoryProvider.notifier).state = category;
+    });
+  }
 
   @override
   void setState(VoidCallback fn) {
@@ -127,7 +149,7 @@ class _NewArticleFormState extends ConsumerState<NewArticleForm> {
       context,
       dialog: AppDialogBox(
         header: Text(
-          'Create New Article',
+          AppStrings.editArticle,
           style: Theme.of(context).textTheme.titleLarge,
         ),
         content: Text(
@@ -141,23 +163,27 @@ class _NewArticleFormState extends ConsumerState<NewArticleForm> {
   @override
   Widget build(BuildContext context) {
     final selectedCategory = ref.watch(selectedCategoryProvider);
-    final isLoading = ref.watch(createPostLoading);
     final titleValidator = ref.watch(titleValidatorProvider);
     final contentValidator = ref.watch(contentValidatorProvider);
 
-    ref.listen<CreatePostState>(
-      createPostNotifierProvider,
+    ref.listen<UpdatePostState>(
+      updatePostNotifierProvider,
       (previous, next) {
         next.maybeMap(
           orElse: () {},
           success: (_) {
             ref.read(getAllPostsNotifierProvider.notifier).getFirstPage();
+            ref
+                .read(getSinglePostNotifierProvider.notifier)
+                .getPostById(id: widget.post.id);
             context.router.pop();
           },
           noConnection: (_) {
+            setState(() => _isLoading = false);
             showMessage(AppStrings.connectionProblem);
           },
           error: (_) {
+            setState(() => _isLoading = false);
             showMessage(_.failure.message ?? AppStrings.unknownError);
           },
         );
@@ -231,20 +257,23 @@ class _NewArticleFormState extends ConsumerState<NewArticleForm> {
           const SizedBox(height: 20),
           AppStateButton(
             text: 'Publish',
-            loading: isLoading,
+            loading: _isLoading,
             onPressed: () {
               if (_formKey.currentState!.validate()) {
-                if (isLoading) return;
+                if (_isLoading) return;
+
+                setState(() => _isLoading = true);
 
                 if (selectedCategory == null) {
                   showMessage('Please select category');
                   return;
                 }
 
-                ref.read(createPostNotifierProvider.notifier).createPost(
+                ref.read(updatePostNotifierProvider.notifier).updatePost(
+                      id: widget.post.id,
                       title: titleController.text,
                       content: contentController.text,
-                      status: 'Published',
+                      status: widget.post.status,
                       categoryId: selectedCategory.id,
                     );
               }

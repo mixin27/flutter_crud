@@ -1,6 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_crud/blog/feat_blog.dart';
 import 'package:flutter_crud/core/feat_core.dart';
+import 'package:flutter_crud/routes/app_router.dart';
 import 'package:smf_core/smf_core.dart';
 
 class PostListItem extends StatelessWidget {
@@ -14,7 +16,9 @@ class PostListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        context.router.push(PostDetailRoute(postId: post.id));
+      },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
         child: Row(
@@ -84,7 +88,7 @@ class PostListItem extends StatelessWidget {
                 child: CommonCachedNetworkImage(
                   url: 'assets/images/nb_sportsImage1.jpg',
                   height: 100,
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fill,
                 ),
               ),
             ),
