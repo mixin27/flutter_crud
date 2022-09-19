@@ -10,4 +10,13 @@ abstract class CategoryRepository {
   /// Create a category.
   Future<Either<BlogFailure, DomainResult<CategoryModel>>> createCategory(
       {required String name});
+
+  /// Update the category by id.
+
+  Future<Either<BlogFailure, DomainResult<CategoryModel>>> updateCategory(
+      {required String id, required String name});
+
+  /// Delete the category by id.
+  Future<Either<BlogFailure, DomainResult<Unit>>> deleteCategory(
+      {required String id});
 }

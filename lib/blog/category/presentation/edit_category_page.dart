@@ -5,8 +5,10 @@ import 'package:flutter_crud/core/feat_core.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:smf_core/smf_core.dart';
 
-class AddNewCategoryPage extends StatelessWidget {
-  const AddNewCategoryPage({super.key});
+class EditCategoryPage extends StatelessWidget {
+  const EditCategoryPage({super.key, required this.category});
+
+  final CategoryModel category;
 
   @override
   Widget build(BuildContext context) {
@@ -14,16 +16,16 @@ class AddNewCategoryPage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: const Text(AppStrings.newCategory),
+          title: const Text(AppStrings.editCategory),
         ),
         body: Container(
           padding: const EdgeInsets.symmetric(
             horizontal: 20,
           ),
           child: ListView(
-            children: const [
-              SizedBox(height: 20),
-              NewCategoryForm(),
+            children: [
+              const SizedBox(height: 20),
+              EditCategoryForm(category: category),
             ],
           ),
         ),
@@ -32,18 +34,33 @@ class AddNewCategoryPage extends StatelessWidget {
   }
 }
 
-class NewCategoryForm extends ConsumerStatefulWidget {
-  const NewCategoryForm({
+class EditCategoryForm extends ConsumerStatefulWidget {
+  const EditCategoryForm({
     Key? key,
+    required this.category,
   }) : super(key: key);
 
+  final CategoryModel category;
+
   @override
-  _NewCategoryFormState createState() => _NewCategoryFormState();
+  _EditCategoryFormState createState() => _EditCategoryFormState();
 }
 
-class _NewCategoryFormState extends ConsumerState<NewCategoryForm> {
+class _EditCategoryFormState extends ConsumerState<EditCategoryForm> {
   final _formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
+
+  bool _isLoading = false;
+
+  @override
+  void initState() {
+    init();
+    super.initState();
+  }
+
+  Future<void> init() async {
+    nameController.text = widget.category.name;
+  }
 
   @override
   void dispose() {
@@ -53,20 +70,20 @@ class _NewCategoryFormState extends ConsumerState<NewCategoryForm> {
 
   @override
   Widget build(BuildContext context) {
-    final isLoading = ref.watch(createLoadingProvider);
     final nameValidator = ref.watch(nameValidatorProvider);
 
-    ref.listen<CreateCategoryState>(
-      createCategoryNotifierProvider,
+    ref.listen<UpdateCategoryState>(
+      updateCategoryNotifierProvider,
       (previous, next) {
         next.maybeMap(
           orElse: () {},
           noConnection: (_) {
+            setState(() => _isLoading = false);
             showAnimatedDialog(
               context,
               dialog: AppDialogBox(
                 header: Text(
-                  AppStrings.newCategory,
+                  AppStrings.editCategory,
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 content: Text(
@@ -84,11 +101,12 @@ class _NewCategoryFormState extends ConsumerState<NewCategoryForm> {
             context.router.pop();
           },
           error: (_) {
+            setState(() => _isLoading = false);
             showAnimatedDialog(
               context,
               dialog: AppDialogBox(
                 header: Text(
-                  AppStrings.newCategory,
+                  AppStrings.editCategory,
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 content: Text(
@@ -124,15 +142,20 @@ class _NewCategoryFormState extends ConsumerState<NewCategoryForm> {
           ),
           const SizedBox(height: 20),
           AppStateButton(
-            text: 'Save',
-            loading: isLoading,
+            text: AppStrings.update,
+            loading: _isLoading,
             onPressed: () {
               if (_formKey.currentState!.validate()) {
-                if (isLoading) return;
+                if (_isLoading) return;
+
+                setState(() => _isLoading = true);
 
                 ref
-                    .read(createCategoryNotifierProvider.notifier)
-                    .createCategory(name: nameController.text.trim());
+                    .read(updateCategoryNotifierProvider.notifier)
+                    .updateCategory(
+                      id: widget.category.id,
+                      name: nameController.text.trim(),
+                    );
               }
             },
           ),

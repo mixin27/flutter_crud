@@ -28,6 +28,7 @@ part 'app_router.gr.dart';
         AutoRoute(page: NewPostPage, path: 'articles/new'),
         AutoRoute(page: CategoryListPage, path: 'categories'),
         AutoRoute(page: AddNewCategoryPage, path: 'categories/new'),
+        AutoRoute(page: EditCategoryPage, path: 'categories/edit'),
         AutoRoute(page: ProfilePage, path: 'me'),
       ],
     ),

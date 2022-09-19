@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_crud/blog/category/feat_category.dart';
 import 'package:flutter_crud/core/feat_core.dart';
@@ -72,38 +73,73 @@ class CategoryRemoteService {
     }
   }
 
+  /// Update a category by id.
+  ///
+  /// Throw [RestApiException] when the request failed.
+  Future<Result<CategoryDto>> updateCategory({
+    required String id,
+    required String name,
+  }) async {
+    try {
+      final response = await _dio.put(
+        AppConsts.apiEndpoints.category,
+        data: {
+          "postCategoryID": id,
+          "PostCategoryName": name,
+        },
+      );
+
+      if (response.statusCode == AppConsts.status.ok) {
+        final data = ResponseDto.fromJson(responseData(response)).data;
+        final category = CategoryDto.fromJson(data);
+        return Result.withData(category);
+      } else {
+        throw RestApiException(response.statusCode, response.statusMessage);
+      }
+    } on DioError catch (e) {
+      if (e.isNoConnectionError) {
+        return const Result.noConnection();
+      } else if (e.error != null) {
+        throw RestApiException(
+          e.response?.statusCode,
+          e.response?.statusMessage,
+        );
+      } else {
+        rethrow;
+      }
+    }
+  }
+
   /// Delete a category by id.
   ///
   /// Throw [RestApiException] when the request failed.
-  // Future<Result<CategoryDto>> deleteCategoryById({
-  //   required String id,
-  // }) async {
-  //   try {
-  //     final response = await _dio.delete(
-  //       AppConsts.apiEndpoints.category,
-  //       queryParameters: {
-  //         "PostCategoryID": id,
-  //       },
-  //     );
+  Future<Result<Unit>> deleteCategoryById({
+    required String id,
+  }) async {
+    try {
+      final response = await _dio.delete(
+        AppConsts.apiEndpoints.category,
+        queryParameters: {
+          "PostCategoryID": id,
+        },
+      );
 
-  //     if (response.statusCode == AppConsts.status.ok) {
-  //       final data = ResponseDto.fromJson(responseData(response)).data;
-  //       final category = CategoryDto.fromJson(data);
-  //       return Result.withData(category);
-  //     } else {
-  //       throw RestApiException(response.statusCode, response.statusMessage);
-  //     }
-  //   } on DioError catch (e) {
-  //     if (e.isNoConnectionError) {
-  //       return const Result.noConnection();
-  //     } else if (e.error != null) {
-  //       throw RestApiException(
-  //         e.response?.statusCode,
-  //         e.response?.statusMessage,
-  //       );
-  //     } else {
-  //       rethrow;
-  //     }
-  //   }
-  // }
+      if (response.statusCode == AppConsts.status.ok) {
+        return const Result.withData(unit);
+      } else {
+        throw RestApiException(response.statusCode, response.statusMessage);
+      }
+    } on DioError catch (e) {
+      if (e.isNoConnectionError) {
+        return const Result.noConnection();
+      } else if (e.error != null) {
+        throw RestApiException(
+          e.response?.statusCode,
+          e.response?.statusMessage,
+        );
+      } else {
+        rethrow;
+      }
+    }
+  }
 }

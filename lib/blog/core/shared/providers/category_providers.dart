@@ -76,3 +76,17 @@ final allNewsCategoryProvider = Provider<CategoryModel>(
 final selectedCategoryProvider = StateProvider<CategoryModel?>(
   (ref) => null,
 );
+
+final updateCategoryNotifierProvider =
+    StateNotifierProvider<UpdateCategoryNotifier, UpdateCategoryState>(
+  (ref) => UpdateCategoryNotifier(
+    ref.watch(categoryRepositoryProvider),
+  ),
+);
+
+final deleteCategoryNotifierProvider =
+    StateNotifierProvider<DeleteCategoryNotifier, DeleteCategoryState>(
+  (ref) => DeleteCategoryNotifier(
+    ref.watch(categoryRepositoryProvider),
+  ),
+);

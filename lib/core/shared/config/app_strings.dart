@@ -11,6 +11,7 @@ class AppStrings {
   static const String email = 'Email';
   static const String usercode = 'Usercode';
   static const String password = 'Password';
+  static const String name = 'Name';
   static const String login = 'Login';
   static const String logout = 'Logout';
   static const String resetPassword = 'Reset Password';
@@ -33,4 +34,15 @@ class AppStrings {
   static const String yes = "Yes";
   static const String no = "No";
   static const String unitMMK = 'MMK';
+
+  static const String categories = 'Categories';
+  static const String newCategory = 'New Category';
+  static const String editCategory = 'Edit Category';
+  static const String deleteCategory = 'Delete Category';
+  static const String categoryName = 'Category Name';
+
+  static const String delete = 'Delete';
+  static const String update = 'Update';
+  static const String save = 'Save';
+  static const String cancel = 'Cancel';
 }

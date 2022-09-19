@@ -1,7 +1,10 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_crud/blog/feat_blog.dart';
 import 'package:flutter_crud/core/feat_core.dart';
+import 'package:flutter_crud/routes/app_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:smf_core/smf_core.dart';
 
 class CategoryListPage extends ConsumerStatefulWidget {
   const CategoryListPage({super.key});
@@ -11,6 +14,8 @@ class CategoryListPage extends ConsumerStatefulWidget {
 }
 
 class _CategoryListPageState extends ConsumerState<CategoryListPage> {
+  static const String tag = 'CategoryListPage';
+
   @override
   void initState() {
     init();
@@ -35,13 +40,60 @@ class _CategoryListPageState extends ConsumerState<CategoryListPage> {
   Widget build(BuildContext context) {
     final categoriesState = ref.watch(getAllCategoriesNotifierProvider);
 
+    ref.listen<DeleteCategoryState>(
+      deleteCategoryNotifierProvider,
+      (previous, next) {
+        next.maybeMap(
+          orElse: () {},
+          loading: (_) {},
+          noConnection: (_) {
+            showDialog(
+              context: context,
+              builder: (context) => AppDialogBox(
+                header: Text(
+                  AppStrings.deleteCategory,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                content: Text(
+                  AppStrings.connectionProblem,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+              ),
+            );
+          },
+          success: (_) {
+            ref
+                .read(getAllCategoriesNotifierProvider.notifier)
+                .getAllCategories();
+            Logger.clap(tag, 'Deleting category success.');
+          },
+          error: (_) {
+            Logger.e(tag, _.failure.message ?? AppStrings.unknownError);
+            showDialog(
+              context: context,
+              builder: (context) => AppDialogBox(
+                header: Text(
+                  AppStrings.deleteCategory,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                content: Text(
+                  _.failure.message ?? AppStrings.unknownError,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+
     return Scaffold(
       appBar: AppBar(
         foregroundColor: Theme.of(context).colorScheme.onSurface,
         backgroundColor: Theme.of(context).colorScheme.surface,
         elevation: 0,
         centerTitle: true,
-        title: const Text('Categories'),
+        title: const Text(AppStrings.categories),
       ),
       floatingActionButton: const AddCategoryButton(),
       body: categoriesState.map(
@@ -61,19 +113,53 @@ class _CategoryListPageState extends ConsumerState<CategoryListPage> {
         success: (_) => RefreshIndicator(
           onRefresh: getAllCategories,
           child: ListView.separated(
+            physics: const BouncingScrollPhysics(
+              parent: AlwaysScrollableScrollPhysics(),
+            ),
             itemBuilder: (context, index) {
               final category = _.categories.elementAt(index);
               return ListTile(
-                onTap: () {},
+                onTap: () {
+                  context.router.push(EditCategoryRoute(category: category));
+                },
                 title: Text(category.name),
                 leading: ActiveDotIndicator(active: category.active),
-                // trailing: IconButton(
-                //   onPressed: () {},
-                //   icon: Icon(
-                //     Icons.delete,
-                //     color: Theme.of(context).colorScheme.error,
-                //   ),
-                // ),
+                trailing: IconButton(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => AppDialogBox(
+                        header: Text(
+                          AppStrings.deleteCategory,
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                        content: Text(
+                          'Are you sure you want to delete ${category.name}?',
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                        footer: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                                ref
+                                    .read(
+                                        deleteCategoryNotifierProvider.notifier)
+                                    .deleteCategoryById(id: 'category.id');
+                              },
+                              child: const Text(AppStrings.delete),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                  icon: Icon(
+                    Icons.delete,
+                    color: Theme.of(context).colorScheme.error,
+                  ),
+                ),
               );
             },
             separatorBuilder: (context, index) => const Divider(),
