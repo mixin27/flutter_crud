@@ -90,7 +90,7 @@ class _PostDetailPageState extends ConsumerState<PostDetailPage> {
                 const SizedBox(height: 20),
                 Text(
                   post.title,
-                  style: Theme.of(context).textTheme.headline5,
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
                 const SizedBox(height: 20),
                 Row(
@@ -124,7 +124,7 @@ class _PostDetailPageState extends ConsumerState<PostDetailPage> {
                   post.content,
                   softWrap: true,
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        fontSize: 20,
+                        fontSize: 16,
                       ),
                 ),
               ],
