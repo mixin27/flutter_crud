@@ -71,8 +71,6 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
   /// Sign out
   Future<void> signOut() async {
-    state = const AuthState.inProgress();
-
     final failureOrSuccess = await _authenticator.signOut();
 
     state = failureOrSuccess.fold(

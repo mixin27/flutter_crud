@@ -2,7 +2,6 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_crud/auth/feat_auth.dart';
-import 'package:flutter_crud/blog/feat_blog.dart';
 import 'package:flutter_crud/core/feat_core.dart';
 import 'package:flutter_crud/env.dart';
 import 'package:flutter_crud/routes/app_router.dart';
@@ -27,10 +26,6 @@ final initializationProvider = FutureProvider<Unit>(
     // auth
     final authNotifier = ref.read(authNotifierProvider.notifier);
     await authNotifier.checkAndUpdateAuthStatus();
-
-    await ref
-        .read(getAllCategoriesNotifierProvider.notifier)
-        .getAllCategories();
 
     return unit;
   },

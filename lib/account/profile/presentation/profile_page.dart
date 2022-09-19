@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_crud/auth/feat_auth.dart';
+import 'package:flutter_crud/blog/core/shared/providers/category_providers.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class ProfilePage extends ConsumerWidget {
@@ -13,6 +14,7 @@ class ProfilePage extends ConsumerWidget {
         actions: [
           IconButton(
             onPressed: () {
+              ref.read(getAllCategoriesNotifierProvider.notifier).resetState();
               ref.read(authNotifierProvider.notifier).signOut();
             },
             icon: const Icon(Icons.logout_outlined),

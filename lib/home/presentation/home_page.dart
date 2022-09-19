@@ -24,7 +24,7 @@ class _HomePageState extends ConsumerState<HomePage>
   }
 
   Future<void> init() async {
-    //
+    getAllCategories();
   }
 
   Future<void> getAllCategories() async {

@@ -22,6 +22,10 @@ class GetAllCagetoriesNotifier extends StateNotifier<GetAllCategoriesState> {
   GetAllCagetoriesNotifier(this._repository)
       : super(const GetAllCategoriesState.initial());
 
+  void resetState() {
+    state = const GetAllCategoriesState.initial();
+  }
+
   Future<void> getAllCategories() async {
     state = const GetAllCategoriesState.loading();
 
