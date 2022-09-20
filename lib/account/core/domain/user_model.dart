@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:smf_core/smf_core.dart';
 
 part 'user_model.freezed.dart';
 
@@ -20,4 +21,6 @@ class UserModel with _$UserModel {
     required String lastLogin,
     required bool active,
   }) = _UserModel;
+
+  DateTime? get lastLoginTime => lastLogin.toDateTime();
 }

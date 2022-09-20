@@ -12,5 +12,7 @@ export 'core/application/get_profile_notifier.dart';
 export 'core/application/update_profile_notifier.dart';
 export 'core/application/change_password_notifier.dart';
 
+export 'core/shared/account_providers.dart';
+
 // Profile
 export 'profile/presentation/profile_page.dart';

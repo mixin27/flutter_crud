@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_crud/account/feat_account.dart';
 import 'package:flutter_crud/blog/feat_blog.dart';
 import 'package:flutter_crud/core/feat_core.dart';
 import 'package:flutter_crud/routes/app_router.dart';
@@ -25,11 +26,17 @@ class _HomePageState extends ConsumerState<HomePage>
 
   Future<void> init() async {
     // getAllCategories();
+    getProfile();
   }
 
   Future<void> getAllCategories() async {
     Future.microtask(() =>
         ref.read(getAllCategoriesNotifierProvider.notifier).getAllCategories());
+  }
+
+  Future<void> getProfile() async {
+    Future.microtask(
+        () => ref.read(getProfileNotifierProvider.notifier).getProfile());
   }
 
   @override
@@ -160,21 +167,7 @@ class HomeDrawer extends StatelessWidget {
         children: [
           SizedBox(
             height: 130,
-            child: DrawerHeader(
-              margin: EdgeInsets.zero,
-              child: ListTile(
-                onTap: () {
-                  _scaffoldKey.currentState!.closeDrawer();
-                  context.router.push(const ProfileRoute());
-                },
-                contentPadding: const EdgeInsets.only(left: 0),
-                leading: const CircleAvatar(
-                  child: Icon(Icons.person),
-                ),
-                title: const Text('Kyaw Zayar Tun'),
-                subtitle: const Text('kyawzayartun.sbs@gmail.com'),
-              ),
-            ),
+            child: HomeDrawerHeader(scaffoldKey: _scaffoldKey),
           ),
           ListTile(
             onTap: () {
@@ -224,6 +217,55 @@ class HomeDrawer extends StatelessWidget {
             child: Text('About'),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class HomeDrawerHeader extends ConsumerWidget {
+  const HomeDrawerHeader({
+    Key? key,
+    required GlobalKey<ScaffoldState> scaffoldKey,
+  })  : _scaffoldKey = scaffoldKey,
+        super(key: key);
+
+  final GlobalKey<ScaffoldState> _scaffoldKey;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(userProfileProvider);
+
+    if (user == null) {
+      return DrawerHeader(
+        margin: EdgeInsets.zero,
+        child: ListTile(
+          onTap: () {
+            _scaffoldKey.currentState!.closeDrawer();
+            context.router.push(const ProfileRoute());
+          },
+          contentPadding: const EdgeInsets.only(left: 0),
+          leading: const CircleAvatar(
+            child: Icon(Icons.person),
+          ),
+          title: const Text(''),
+          subtitle: const Text(''),
+        ),
+      );
+    }
+
+    return DrawerHeader(
+      margin: EdgeInsets.zero,
+      child: ListTile(
+        onTap: () {
+          _scaffoldKey.currentState!.closeDrawer();
+          context.router.push(const ProfileRoute());
+        },
+        contentPadding: const EdgeInsets.only(left: 0),
+        leading: const CircleAvatar(
+          child: Icon(Icons.person),
+        ),
+        title: Text(user.name),
+        subtitle: Text(user.email),
       ),
     );
   }

@@ -21,6 +21,13 @@ final getProfileNotifierProvider =
   ),
 );
 
+final userProfileProvider = Provider<UserModel?>(
+  (ref) => ref.watch(getProfileNotifierProvider).maybeWhen(
+        orElse: () => null,
+        success: (user) => user,
+      ),
+);
+
 final updateProfileNotifierProvider =
     StateNotifierProvider<UpdateProfileNotifier, UpdateProfileState>(
   (ref) => UpdateProfileNotifier(
