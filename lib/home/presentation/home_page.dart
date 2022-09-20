@@ -24,7 +24,7 @@ class _HomePageState extends ConsumerState<HomePage>
   }
 
   Future<void> init() async {
-    getAllCategories();
+    // getAllCategories();
   }
 
   Future<void> getAllCategories() async {
@@ -80,22 +80,27 @@ class _HomePageState extends ConsumerState<HomePage>
                 floating: true,
                 bottom: categoriesState.maybeMap(
                   orElse: () => null,
-                  success: (_) => TabBar(
-                    controller: tabController,
-                    unselectedLabelColor:
-                        Theme.of(context).colorScheme.onSurface.withAlpha(90),
-                    labelColor: Theme.of(context).colorScheme.onSurface,
-                    indicatorColor: Theme.of(context).colorScheme.primary,
-                    indicatorWeight: 6,
-                    isScrollable: true,
-                    tabs: List.generate(
-                      sortedCategories.length,
-                      (index) {
-                        final category = sortedCategories.elementAt(index);
-                        return Tab(text: category.name);
-                      },
-                    ),
-                  ),
+                  success: (_) => tabController != null
+                      ? TabBar(
+                          controller: tabController,
+                          unselectedLabelColor: Theme.of(context)
+                              .colorScheme
+                              .onSurface
+                              .withAlpha(90),
+                          labelColor: Theme.of(context).colorScheme.onSurface,
+                          indicatorColor: Theme.of(context).colorScheme.primary,
+                          indicatorWeight: 6,
+                          isScrollable: true,
+                          tabs: List.generate(
+                            sortedCategories.length,
+                            (index) {
+                              final category =
+                                  sortedCategories.elementAt(index);
+                              return Tab(text: category.name);
+                            },
+                          ),
+                        )
+                      : null,
                 ),
               ),
             ];
@@ -111,20 +116,22 @@ class _HomePageState extends ConsumerState<HomePage>
               icon: Icons.wifi_off,
               onPressed: getAllCategories,
             ),
-            success: (_) => TabBarView(
-              controller: tabController,
-              children: List.generate(
-                sortedCategories.length,
-                (index) {
-                  final category = sortedCategories.elementAt(index);
+            success: (_) => tabController == null
+                ? const SizedBox()
+                : TabBarView(
+                    controller: tabController,
+                    children: List.generate(
+                      sortedCategories.length,
+                      (index) {
+                        final category = sortedCategories.elementAt(index);
 
-                  if (index == 0) {
-                    return const AllPostsList();
-                  }
-                  return CategoryPostList(categoryId: category.id);
-                },
-              ),
-            ),
+                        if (index == 0) {
+                          return const AllPostsList();
+                        }
+                        return CategoryPostList(categoryId: category.id);
+                      },
+                    ),
+                  ),
             error: (_) => ErrorPlaceholderWidget(
               message: _.failure.message ?? AppStrings.unknownError,
               onPressed: getAllCategories,

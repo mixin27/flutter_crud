@@ -63,7 +63,8 @@ class _ApiError {
 
   final String unknown = 'Unknown Error';
   final String noInternet = 'No internet connection';
-  final String badRequest = 'Bad Request';
+  final String badRequest =
+      'Bad Request: Your request information is not corrected.';
   final String forbidden = 'Forbidden';
   final String tooManyRequests = 'Too many requests';
   final String unAuthorized = 'Unauthorized';

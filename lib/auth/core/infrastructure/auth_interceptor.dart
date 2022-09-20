@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_crud/auth/feat_auth.dart';
+import 'package:flutter_crud/core/feat_core.dart';
 import 'package:smf_core/smf_core.dart';
 
 class AuthInterceptor extends Interceptor {
@@ -34,27 +35,43 @@ class AuthInterceptor extends Interceptor {
 
   @override
   void onError(DioError err, ErrorInterceptorHandler handler) async {
-    final errorResponse = err.response;
-    Logger.e(tag, errorResponse);
+    var errorResponse = err.response;
 
-    if (errorResponse != null && errorResponse.statusCode == 401) {
-      final credentials = await _authenticator.getSignedInCredential();
-
-      // credentials != null && credentials.canRefresh
-      //     ? await _authenticator.refresh(credentials)
-      //     : await _authenticator.clearCredentialsStorage();
-      if (credentials != null) {
-        await _authenticator.clearCredentialsStorage();
+    if (errorResponse != null) {
+      try {
+        final customError = ErrorResponseDto.fromJson(errorResponse.data);
+        if (customError.description.isNotEmpty) {
+          errorResponse.statusMessage =
+              '${errorResponse.statusMessage}: ${customError.description}';
+        }
+      } catch (e) {
+        Logger.e(tag, e);
       }
-      await _authNotifier.checkAndUpdateAuthStatus();
-      final refreshCredentials = await _authenticator.getSignedInCredential();
-      if (refreshCredentials != null) {
-        handler.resolve(
-          await _dio.fetch(
-            errorResponse.requestOptions
-              ..headers['Authorization'] = 'Bearer ${refreshCredentials.token}',
-          ),
-        );
+
+      Logger.e(tag, errorResponse);
+
+      if (errorResponse.statusCode == 401) {
+        final credentials = await _authenticator.getSignedInCredential();
+
+        // credentials != null && credentials.canRefresh
+        //     ? await _authenticator.refresh(credentials)
+        //     : await _authenticator.clearCredentialsStorage();
+        if (credentials != null) {
+          await _authenticator.clearCredentialsStorage();
+        }
+        await _authNotifier.checkAndUpdateAuthStatus();
+        final refreshCredentials = await _authenticator.getSignedInCredential();
+        if (refreshCredentials != null) {
+          handler.resolve(
+            await _dio.fetch(
+              errorResponse.requestOptions
+                ..headers['Authorization'] =
+                    'Bearer ${refreshCredentials.token}',
+            ),
+          );
+        }
+      } else {
+        handler.next(err);
       }
     } else {
       handler.next(err);

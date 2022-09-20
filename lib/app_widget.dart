@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_crud/auth/feat_auth.dart';
+import 'package:flutter_crud/blog/feat_blog.dart';
 import 'package:flutter_crud/core/feat_core.dart';
 import 'package:flutter_crud/env.dart';
 import 'package:flutter_crud/routes/app_router.dart';
@@ -44,6 +45,9 @@ class AppWidget extends ConsumerWidget {
       next.maybeWhen(
         orElse: () {},
         authenticated: () {
+          ref
+              .read(getAllCategoriesNotifierProvider.notifier)
+              .getAllCategories();
           _appRouter.replaceAll([const EmptyHomeRoute()]);
         },
         unauthenticated: () {
