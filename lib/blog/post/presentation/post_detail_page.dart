@@ -59,7 +59,7 @@ class _PostDetailPageState extends ConsumerState<PostDetailPage> {
               onPressed: () {
                 ref
                     .read(deletePostNotifierProvider.notifier)
-                    .deletePost(id: 'post.id');
+                    .deletePost(id: post.id);
                 Navigator.of(context).pop();
               },
               style: TextButton.styleFrom(
