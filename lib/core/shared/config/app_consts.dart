@@ -33,8 +33,11 @@ class _Endpoints {
   _Endpoints._();
 
   // Auth
+  final String user = '/user';
   final String userCreate = '/user/createUser';
   final String userLogin = '/user/loginuser';
+  final String userUpdate = '/user/updateUser';
+  final String changePassword = '/user/ChangePassword';
 
   // Category
   final String category = '/category';
