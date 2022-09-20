@@ -59,3 +59,17 @@ final deletePostNotifierProvider =
     ref.watch(postRepositoryProvider),
   ),
 );
+
+final getPostsByUserNotifierProvider =
+    StateNotifierProvider<GetPostsByUserNotifier, GetPostsByUserState>(
+  (ref) => GetPostsByUserNotifier(
+    ref.watch(postRepositoryProvider),
+  ),
+);
+
+final deleteMultiPostNotifierProvider =
+    StateNotifierProvider<DeleteMultiPostNotifier, DeleteMultiPostState>(
+  (ref) => DeleteMultiPostNotifier(
+    ref.watch(postRepositoryProvider),
+  ),
+);

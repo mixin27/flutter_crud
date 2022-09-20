@@ -10,6 +10,10 @@ abstract class PostRepository {
   /// Get single post by id.
   Future<Either<BlogFailure, DomainResult<PostModel>>> getPostById(String id);
 
+  /// Get all posts by login user.
+  Future<Either<BlogFailure, DomainResult<List<PostModel>>>>
+      getAllPostsByUser();
+
   /// Create post.
   Future<Either<BlogFailure, DomainResult<PostModel>>> createPost(
       {required String title,
@@ -28,4 +32,8 @@ abstract class PostRepository {
   /// Delete post by id.
   Future<Either<BlogFailure, DomainResult<Unit>>> deletePost(
       {required String id});
+
+  /// Delete multiple posts by id.
+  Future<Either<BlogFailure, DomainResult<Unit>>> deleteMultiplePosts(
+      {required List<String> ids});
 }

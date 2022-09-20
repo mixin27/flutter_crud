@@ -15,6 +15,8 @@ export 'application/get_single_post_notifier.dart';
 export 'application/create_post_notifier.dart';
 export 'application/update_post_notifier.dart';
 export 'application/delete_post_notifier.dart';
+export 'application/delete_multi_post_notifier.dart';
+export 'application/get_posts_by_user_notifier.dart';
 
 export 'presentation/all_posts_list.dart';
 export 'presentation/category_post_list.dart';

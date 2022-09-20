@@ -44,6 +44,8 @@ class _Endpoints {
 
   // Post
   final String post = '/post';
+  final String postUser = '/post/user';
+  final String multiposts = '/post/multiposts';
 }
 
 class _Status {

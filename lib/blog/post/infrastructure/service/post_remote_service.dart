@@ -74,6 +74,35 @@ class PostRemoteService {
     }
   }
 
+  /// Get all posts by login user.
+  ///
+  /// Throw [RestApiException] when the request failed.
+  Future<Result<List<PostDto>>> getAllPostsByUser() async {
+    try {
+      final response = await _dio.get(AppConsts.apiEndpoints.postUser);
+
+      if (response.statusCode == AppConsts.status.ok) {
+        final jsonData = responseData(response);
+        final data = ResponseDto.fromJson(jsonData).data as List<dynamic>;
+        final posts = data.map((e) => PostDto.fromJson(e)).toList();
+        return Result.withData(posts);
+      } else {
+        throw RestApiException(response.statusCode, response.statusMessage);
+      }
+    } on DioError catch (e) {
+      if (e.isNoConnectionError) {
+        return const Result.noConnection();
+      } else if (e.error != null) {
+        throw RestApiException(
+          e.response?.statusCode,
+          e.response?.statusMessage,
+        );
+      } else {
+        rethrow;
+      }
+    }
+  }
+
   /// Create post.
   ///
   /// Throw [RestApiException] when the request failed.
@@ -176,6 +205,43 @@ class PostRemoteService {
         queryParameters: {
           "postID": id,
         },
+      );
+
+      if (response.statusCode == AppConsts.status.ok) {
+        return const Result.withData(unit);
+      } else {
+        throw RestApiException(response.statusCode, response.statusMessage);
+      }
+    } on DioError catch (e) {
+      if (e.isNoConnectionError) {
+        return const Result.noConnection();
+      } else if (e.error != null) {
+        throw RestApiException(
+          e.response?.statusCode,
+          e.response?.statusMessage,
+        );
+      } else {
+        rethrow;
+      }
+    }
+  }
+
+  /// Delete multiple posts by id.
+  ///
+  /// Throw [RestApiException] when the request failed.
+  Future<Result<Unit>> deleteMultiplePosts({
+    required List<String> ids,
+  }) async {
+    final payload = ids
+        .map<Map<String, dynamic>>((id) => {
+              "postID": id,
+            })
+        .toList();
+
+    try {
+      final response = await _dio.delete(
+        AppConsts.apiEndpoints.multiposts,
+        data: payload,
       );
 
       if (response.statusCode == AppConsts.status.ok) {

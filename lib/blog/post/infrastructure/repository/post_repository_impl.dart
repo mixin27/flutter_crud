@@ -117,4 +117,38 @@ class PostRepositoryImpl implements PostRepository {
       return left(BlogFailure.api(e.errorCode, e.message));
     }
   }
+
+  @override
+  Future<Either<BlogFailure, DomainResult<Unit>>> deleteMultiplePosts(
+      {required List<String> ids}) async {
+    try {
+      final result = await _remoteService.deleteMultiplePosts(ids: ids);
+
+      return right(
+        await result.when(
+          noConnection: () => const DomainResult.noConnection(),
+          withData: (res) => DomainResult.result(res),
+        ),
+      );
+    } on RestApiException catch (e) {
+      return left(BlogFailure.api(e.errorCode, e.message));
+    }
+  }
+
+  @override
+  Future<Either<BlogFailure, DomainResult<List<PostModel>>>>
+      getAllPostsByUser() async {
+    try {
+      final result = await _remoteService.getAllPostsByUser();
+
+      return right(
+        await result.when(
+          noConnection: () => const DomainResult.noConnection(),
+          withData: (posts) => DomainResult.result(posts.domainList),
+        ),
+      );
+    } on RestApiException catch (e) {
+      return left(BlogFailure.api(e.errorCode, e.message));
+    }
+  }
 }
