@@ -56,7 +56,7 @@ class _CategoryListPageState extends ConsumerState<CategoryListPage> {
                 ),
                 content: Text(
                   AppStrings.connectionProblem,
-                  style: Theme.of(context).textTheme.titleLarge,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
             );
@@ -78,7 +78,7 @@ class _CategoryListPageState extends ConsumerState<CategoryListPage> {
                 ),
                 content: Text(
                   _.failure.message ?? AppStrings.unknownError,
-                  style: Theme.of(context).textTheme.titleLarge,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
             );
@@ -135,7 +135,7 @@ class _CategoryListPageState extends ConsumerState<CategoryListPage> {
                         ),
                         content: Text(
                           'Are you sure you want to delete ${category.name}?',
-                          style: Theme.of(context).textTheme.titleLarge,
+                          style: Theme.of(context).textTheme.titleMedium,
                         ),
                         footer: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
