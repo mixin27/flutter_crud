@@ -4,6 +4,7 @@ import 'package:flutter_crud/account/feat_account.dart';
 import 'package:flutter_crud/auth/feat_auth.dart';
 import 'package:flutter_crud/blog/feat_blog.dart';
 import 'package:flutter_crud/home/feat_home.dart';
+import 'package:flutter_crud/settings/feat_settings.dart';
 import 'package:flutter_crud/splash/feat_splash.dart';
 
 part 'app_router.gr.dart';
@@ -32,6 +33,8 @@ part 'app_router.gr.dart';
         AutoRoute(page: AddNewCategoryPage, path: 'categories/new'),
         AutoRoute(page: EditCategoryPage, path: 'categories/edit'),
         AutoRoute(page: ProfilePage, path: 'me'),
+        AutoRoute(page: ChangePasswordPage, path: 'change-password'),
+        AutoRoute(page: SettingsPage, path: 'settings'),
       ],
     ),
   ],

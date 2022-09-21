@@ -203,6 +203,7 @@ class HomeDrawer extends StatelessWidget {
           ListTile(
             onTap: () {
               _scaffoldKey.currentState!.closeDrawer();
+              context.router.push(const SettingsRoute());
             },
             title: const Text('Setting'),
           ),

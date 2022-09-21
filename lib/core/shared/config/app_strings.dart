@@ -51,4 +51,6 @@ class AppStrings {
   static const String update = 'Update';
   static const String save = 'Save';
   static const String cancel = 'Cancel';
+
+  static const String changePassword = 'Change Password';
 }
