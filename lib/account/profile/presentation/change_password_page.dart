@@ -76,93 +76,95 @@ class _ChangePasswordPageState extends ConsumerState<ChangePasswordPage> {
       },
     );
 
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        foregroundColor: Theme.of(context).colorScheme.onSurface,
-        backgroundColor: Theme.of(context).colorScheme.surface,
-        centerTitle: true,
-        title: const Text('Change Password'),
-      ),
-      body: ListView(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        physics: const BouncingScrollPhysics(
-          parent: AlwaysScrollableScrollPhysics(),
+    return HideKeyboard(
+      child: Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          foregroundColor: Theme.of(context).colorScheme.onSurface,
+          backgroundColor: Theme.of(context).colorScheme.surface,
+          centerTitle: true,
+          title: const Text('Change Password'),
         ),
-        children: [
-          const SizedBox(height: 20),
-          Text(
-            AppStrings.loremIpsum,
-            style: Theme.of(context).textTheme.titleMedium,
+        body: ListView(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          physics: const BouncingScrollPhysics(
+            parent: AlwaysScrollableScrollPhysics(),
           ),
-          const SizedBox(height: 20),
-          Form(
-            key: _formKey,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            child: Column(
-              children: [
-                TextFormField(
-                  controller: oldPassController,
-                  keyboardType: TextInputType.visiblePassword,
-                  validator: passwordValidator,
-                  obscureText: obscureText,
-                  decoration: const InputDecoration(
-                    prefixIcon: Icon(Icons.lock_outline),
-                    label: Text('Old Password'),
-                    // suffixIcon: GestureDetector(
-                    //   onTap: () {
-                    //     ref.read(obscureTextProvider.notifier).state =
-                    //         !obscureText;
-                    //   },
-                    //   child: Icon(
-                    //     obscureText ? Icons.visibility_off : Icons.visibility,
-                    //   ),
-                    // ),
+          children: [
+            const SizedBox(height: 20),
+            Text(
+              AppStrings.loremIpsum,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            const SizedBox(height: 20),
+            Form(
+              key: _formKey,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              child: Column(
+                children: [
+                  TextFormField(
+                    controller: oldPassController,
+                    keyboardType: TextInputType.visiblePassword,
+                    validator: passwordValidator,
+                    obscureText: obscureText,
+                    decoration: const InputDecoration(
+                      prefixIcon: Icon(Icons.lock_outline),
+                      label: Text('Old Password'),
+                      // suffixIcon: GestureDetector(
+                      //   onTap: () {
+                      //     ref.read(obscureTextProvider.notifier).state =
+                      //         !obscureText;
+                      //   },
+                      //   child: Icon(
+                      //     obscureText ? Icons.visibility_off : Icons.visibility,
+                      //   ),
+                      // ),
+                    ),
                   ),
-                ),
-                const SizedBox(height: 20),
-                TextFormField(
-                  controller: newPassController,
-                  keyboardType: TextInputType.visiblePassword,
-                  validator: passwordValidator,
-                  obscureText: obscureText,
-                  decoration: InputDecoration(
-                    prefixIcon: const Icon(Icons.lock_outline),
-                    label: const Text('New Password'),
-                    suffixIcon: GestureDetector(
-                      onTap: () {
-                        ref.read(obscureTextProvider.notifier).state =
-                            !obscureText;
-                      },
-                      child: Icon(
-                        obscureText ? Icons.visibility_off : Icons.visibility,
+                  const SizedBox(height: 20),
+                  TextFormField(
+                    controller: newPassController,
+                    keyboardType: TextInputType.visiblePassword,
+                    validator: passwordValidator,
+                    obscureText: obscureText,
+                    decoration: InputDecoration(
+                      prefixIcon: const Icon(Icons.lock_outline),
+                      label: const Text('New Password'),
+                      suffixIcon: GestureDetector(
+                        onTap: () {
+                          ref.read(obscureTextProvider.notifier).state =
+                              !obscureText;
+                        },
+                        child: Icon(
+                          obscureText ? Icons.visibility_off : Icons.visibility,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 20),
-                AppStateButton(
-                  text: AppStrings.save,
-                  loading: _isLoading,
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      if (_isLoading) return;
+                  const SizedBox(height: 20),
+                  AppStateButton(
+                    text: AppStrings.save,
+                    loading: _isLoading,
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        if (_isLoading) return;
 
-                      setState(() => _isLoading = true);
+                        setState(() => _isLoading = true);
 
-                      ref
-                          .read(changePasswordNotifierProvider.notifier)
-                          .changePassword(
-                            oldPassword: oldPassController.text,
-                            newPassword: newPassController.text,
-                          );
-                    }
-                  },
-                ),
-              ],
+                        ref
+                            .read(changePasswordNotifierProvider.notifier)
+                            .changePassword(
+                              oldPassword: oldPassController.text,
+                              newPassword: newPassController.text,
+                            );
+                      }
+                    },
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

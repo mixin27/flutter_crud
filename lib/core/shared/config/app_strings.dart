@@ -11,7 +11,9 @@ class AppStrings {
   static const String email = 'Email';
   static const String usercode = 'Usercode';
   static const String password = 'Password';
+  static const String phone = 'Phone number';
   static const String name = 'Name';
+  static const String bio = 'Bio';
   static const String login = 'Login';
   static const String logout = 'Logout';
   static const String resetPassword = 'Reset Password';
@@ -22,7 +24,7 @@ class AppStrings {
 
   static const String version = 'Version';
   static const String unknownError = 'Unknown Error';
-  static const String connectionProblem = 'Connection Problem';
+  static const String connectionProblem = 'No internet connection';
   static const String storageError = 'Storage Error';
   static const String success = 'Success';
   static const String error = 'Error';
@@ -53,4 +55,5 @@ class AppStrings {
   static const String cancel = 'Cancel';
 
   static const String changePassword = 'Change Password';
+  static const String updateProfile = 'Update Profile';
 }

@@ -17,3 +17,4 @@ export 'core/shared/account_providers.dart';
 // Profile
 export 'profile/presentation/profile_page.dart';
 export 'profile/presentation/change_password_page.dart';
+export 'profile/presentation/edit_profile_page.dart';

@@ -1,8 +1,10 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_crud/account/feat_account.dart';
 import 'package:flutter_crud/auth/feat_auth.dart';
 import 'package:flutter_crud/blog/feat_blog.dart';
 import 'package:flutter_crud/core/feat_core.dart';
+import 'package:flutter_crud/routes/app_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:smf_core/smf_core.dart';
 
@@ -46,6 +48,14 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
         foregroundColor: Theme.of(context).colorScheme.onSurface,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         title: const Text('Profile'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              context.router.push(const EditProfileRoute());
+            },
+            child: const Text('Edit'),
+          ),
+        ],
       ),
       body: profileState.map(
         initial: (_) => const SizedBox(),
