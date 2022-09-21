@@ -23,7 +23,7 @@ class AuthInterceptor extends Interceptor {
         credential == null
             ? {}
             : {
-                'Authorization': 'Bearer ${credential.token}',
+                'Authorization': '${credential.type} ${credential.accessToken}',
               },
       );
 
@@ -66,7 +66,7 @@ class AuthInterceptor extends Interceptor {
             await _dio.fetch(
               errorResponse.requestOptions
                 ..headers['Authorization'] =
-                    'Bearer ${refreshCredentials.token}',
+                    '${refreshCredentials.type} ${refreshCredentials.accessToken}',
             ),
           );
         }

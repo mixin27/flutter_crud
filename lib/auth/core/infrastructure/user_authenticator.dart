@@ -66,7 +66,7 @@ class UserAuthenticator {
       if (response.statusCode == AppConsts.status.ok) {
         final jsonData = responseData(response);
         final result = ResponseDto.fromJson(jsonData);
-        final credential = Credential(token: result.data);
+        final credential = Credential(accessToken: result.data, type: 'Bearer');
         await _credentialStorage.save(credential);
         return right(unit);
       } else {
@@ -130,7 +130,7 @@ class UserAuthenticator {
           response.statusCode == AppConsts.status.ok) {
         final jsonData = responseData(response);
         final result = ResponseDto.fromJson(jsonData);
-        final credential = Credential(token: result.data);
+        final credential = Credential(accessToken: result.data, type: 'Bearer');
         await _credentialStorage.save(credential);
         return right(unit);
       } else {
