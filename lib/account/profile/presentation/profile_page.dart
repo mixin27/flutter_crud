@@ -99,7 +99,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                   noConnection: (_) => const SizedBox(),
                   empty: (_) => const SizedBox(),
                   success: (_) {
-                    final items = [..._.posts, ..._.posts];
+                    final items = _.posts;
                     return ListView.builder(
                       shrinkWrap: true,
                       primary: false,
