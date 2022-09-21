@@ -1,0 +1,42 @@
+{
+  "editor.formatOnSave": true,
+  "editor.guides.bracketPairs": true,
+  "explorer.compactFolders": false,
+  // Dart recommended settings
+  // Causes the debug view to automatically appear when a breakpoint is hit. This
+  // setting is global and not configurable per-language.
+  "debug.openDebug": "openOnDebugBreak",
+  "[dart]": {
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true,
+    "editor.rulers": [80],
+    "editor.selectionHighlight": false,
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    "editor.suggestSelection": "first",
+    "editor.tabCompletion": "onlySnippets",
+    "editor.wordBasedSuggestions": false,
+    "editor.defaultFormatter": "Dart-Code.dart-code"
+  },
+  // If using material icon theme
+  "material-icon-theme.folders.associations": {
+    "domain": "Rules",
+    "infrastructure": "Node",
+    "application": "App",
+    "presentation": "Layout"
+  },
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "**/.gitkeep": false,
+    "**/*.freezed.dart": true,
+    "**/*.g.dart": true,
+    "**/*.gr.dart": false
+  },
+  "explorerExclude.backup": {},
+  "dartBarrelFileGenerator.excludeFreezed": true,
+  "dartBarrelFileGenerator.excludeGenerated": true
+}
