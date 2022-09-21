@@ -100,7 +100,8 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                   empty: (_) => const SizedBox(),
                   success: (_) {
                     final items = _.posts;
-                    return ListView.builder(
+                    return ListView.separated(
+                      separatorBuilder: (_, __) => const Divider(),
                       shrinkWrap: true,
                       primary: false,
                       itemCount: items.length,
