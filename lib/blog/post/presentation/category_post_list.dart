@@ -3,8 +3,6 @@ import 'package:flutter_crud/blog/feat_blog.dart';
 import 'package:flutter_crud/core/feat_core.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'widgets/post_list_item.dart';
-
 class CategoryPostList extends ConsumerStatefulWidget {
   const CategoryPostList({
     super.key,

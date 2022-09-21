@@ -22,6 +22,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
 
   Future<void> init() async {
     // getProfile();
+    getUserPosts();
   }
 
   Future<void> getProfile() async {
@@ -29,9 +30,15 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
         () => ref.read(getProfileNotifierProvider.notifier).getProfile());
   }
 
+  Future<void> getUserPosts() async {
+    Future.microtask(
+        () => ref.read(getPostsByUserNotifierProvider.notifier).getPosts());
+  }
+
   @override
   Widget build(BuildContext context) {
     final profileState = ref.watch(getProfileNotifierProvider);
+    final articleState = ref.watch(getPostsByUserNotifierProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -54,7 +61,10 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
           final user = _.user;
 
           return RefreshIndicator(
-            onRefresh: getProfile,
+            onRefresh: () async {
+              getProfile();
+              getUserPosts();
+            },
             child: ListView(
               physics: const BouncingScrollPhysics(
                 parent: AlwaysScrollableScrollPhysics(),
@@ -72,11 +82,25 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
                   ),
                 ),
                 const SizedBox(height: 10),
-                ...List.generate(
-                  10,
-                  (index) => ListTile(
-                    title: Text('Article $index'),
-                  ),
+                articleState.map(
+                  initial: (_) => const SizedBox(),
+                  loading: (_) =>
+                      const Center(child: CircularProgressIndicator.adaptive()),
+                  noConnection: (_) => const SizedBox(),
+                  empty: (_) => const SizedBox(),
+                  success: (_) {
+                    final items = [..._.posts, ..._.posts];
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      primary: false,
+                      itemCount: items.length,
+                      itemBuilder: (context, index) {
+                        final article = items.elementAt(index);
+                        return PostListItem(post: article);
+                      },
+                    );
+                  },
+                  error: (_) => const SizedBox(),
                 ),
               ],
             ),
