@@ -151,6 +151,7 @@ class _NewArticleFormState extends ConsumerState<NewArticleForm> {
         next.maybeMap(
           orElse: () {},
           success: (_) {
+            ref.read(selectedCategoryProvider.notifier).state = null;
             ref.read(getAllPostsNotifierProvider.notifier).getFirstPage();
             context.router.pop();
           },

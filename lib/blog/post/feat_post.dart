@@ -24,3 +24,4 @@ export 'presentation/new_post_page.dart';
 export 'presentation/edit_post_page.dart';
 export 'presentation/post_detail_page.dart';
 export 'presentation/widgets/post_list_item.dart';
+export 'presentation/user_posts_page.dart';

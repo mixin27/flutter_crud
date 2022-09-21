@@ -180,6 +180,14 @@ class HomeDrawer extends StatelessWidget {
           ListTile(
             onTap: () {
               _scaffoldKey.currentState!.closeDrawer();
+              context.router.push(const UserPostsRoute());
+            },
+            title: const Text('Your articles'),
+          ),
+          const Divider(),
+          ListTile(
+            onTap: () {
+              _scaffoldKey.currentState!.closeDrawer();
               context.router.push(const NewPostRoute());
             },
             title: const Text('Create New Article'),

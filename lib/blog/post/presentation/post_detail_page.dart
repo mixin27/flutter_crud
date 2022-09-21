@@ -33,86 +33,9 @@ class _PostDetailPageState extends ConsumerState<PostDetailPage> {
         .getPostById(id: context.routeData.pathParams.getString('id')));
   }
 
-  void showDeleteConfirmDialog(PostModel post) {
-    showDialog(
-      context: context,
-      builder: (context) => AppDialogBox(
-        header: Text(
-          AppStrings.deleteArticle,
-          style: Theme.of(context).textTheme.titleLarge,
-        ),
-        content: Text(
-          'Are you sure you want to delete this article?',
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
-        footer: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text(AppStrings.cancel),
-            ),
-            const SizedBox(width: 10),
-            TextButton(
-              onPressed: () {
-                ref
-                    .read(deletePostNotifierProvider.notifier)
-                    .deletePost(id: post.id);
-                Navigator.of(context).pop();
-              },
-              style: TextButton.styleFrom(
-                foregroundColor: Theme.of(context).colorScheme.error,
-                textStyle: Theme.of(context).textTheme.titleMedium,
-              ),
-              child: const Text(AppStrings.delete),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  void showMessage(String message) {
-    showDialog(
-      context: context,
-      builder: (context) => AppDialogBox(
-        header: Text(
-          AppStrings.deleteArticle,
-          style: Theme.of(context).textTheme.titleLarge,
-        ),
-        content: Text(
-          message,
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final postState = ref.watch(getSinglePostNotifierProvider);
-
-    ref.listen<DeletePostState>(
-      deletePostNotifierProvider,
-      (previous, next) {
-        next.maybeMap(
-          orElse: () {},
-          success: (_) {
-            ref.read(getAllPostsNotifierProvider.notifier).getFirstPage();
-            context.router.replaceAll([const EmptyHomeRoute()]);
-            context.router.pop();
-          },
-          noConnection: (_) {
-            showMessage(AppStrings.connectionProblem);
-          },
-          error: (_) {
-            showMessage(_.failure.message ?? AppStrings.unknownError);
-          },
-        );
-      },
-    );
 
     return Scaffold(
       appBar: AppBar(
@@ -128,12 +51,6 @@ class _PostDetailPageState extends ConsumerState<PostDetailPage> {
                 context.router.push(EditPostRoute(post: _.post));
               },
               icon: const Icon(Icons.edit_calendar_outlined),
-            ),
-            IconButton(
-              onPressed: () {
-                showDeleteConfirmDialog(_.post);
-              },
-              icon: const Icon(Icons.delete),
             ),
           ],
         ),
