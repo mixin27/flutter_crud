@@ -58,7 +58,7 @@ class AppWidget extends ConsumerWidget {
 
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
-      title: 'CRUD Demo',
+      title: 'News Blog',
       theme: ref.watch(lightThemeProvider),
       darkTheme: ref.watch(darkThemeProvider),
       themeMode: ref.watch(themeModeProvider),
