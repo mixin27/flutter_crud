@@ -41,8 +41,15 @@ class PostRepositoryImpl implements PostRepository {
 
       return right(
         await result.when(
-          noConnection: () => const DomainResult.noConnection(),
-          withData: (post) => DomainResult.result(post.domainModel),
+          noConnection: () async {
+            final localItem = await _localService.getPostDetail(id);
+            if (localItem == null) return const DomainResult.noConnection();
+            return DomainResult.result(localItem.domainModel);
+          },
+          withData: (post) async {
+            await _localService.upsertPostDetail(post);
+            return DomainResult.result(post.domainModel);
+          },
         ),
       );
     } on RestApiException catch (e) {

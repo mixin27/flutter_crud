@@ -7,6 +7,7 @@ class PostLocalService {
   static const String tag = 'PostLocalService';
   final SembastDatabase _database;
   final _store = intMapStoreFactory.store('blog_articles');
+  final _detailStore = stringMapStoreFactory.store('blog_article_detail');
 
   PostLocalService(this._database);
 
@@ -41,5 +42,22 @@ class PostLocalService {
   Future<int> getLocalPageCount() async {
     final postCount = await _store.count(_database.instance);
     return (postCount / PaginationConfig.itemsPerPage).ceil();
+  }
+
+  /// Insert or update post.
+  Future<void> upsertPostDetail(PostDto dto) async {
+    await _detailStore.record(dto.id).put(_database.instance, dto.toJson());
+  }
+
+  /// Get cached post.
+  Future<PostDto?> getPostDetail(String id) async {
+    final record = _detailStore.record(id);
+    final recordSnapshot = await record.getSnapshot(_database.instance);
+
+    if (recordSnapshot == null) {
+      return null;
+    }
+
+    return PostDto.fromJson(recordSnapshot.value);
   }
 }
