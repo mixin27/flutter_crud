@@ -48,3 +48,10 @@ final changePasswordNotifierProvider =
     ref.watch(accountRepositoryProvider),
   ),
 );
+
+final deleteUserStoreNotifierProvider =
+    StateNotifierProvider<DeleteUserStoreNotifier, AsyncValue<String>>(
+  (ref) => DeleteUserStoreNotifier(
+    ref.watch(accountRepositoryProvider),
+  ),
+);

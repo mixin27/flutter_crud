@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_crud/account/feat_account.dart';
 import 'package:flutter_crud/auth/feat_auth.dart';
 import 'package:flutter_crud/blog/feat_blog.dart';
 import 'package:flutter_crud/core/feat_core.dart';
@@ -54,6 +55,8 @@ class AppWidget extends ConsumerWidget {
           _appRouter.replaceAll([const EmptyHomeRoute()]);
         },
         unauthenticated: () {
+          ref.read(deleteUserStoreNotifierProvider.notifier).deleteUserStore();
+
           _appRouter.replaceAll([const EmptyAuthRoute()]);
         },
       );

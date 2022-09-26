@@ -1,8 +1,11 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_crud/account/feat_account.dart';
 import 'package:smf_core/smf_core.dart';
 
 class AccountRepositoryImpl implements AccountRepository {
+  static const String tag = 'AccountRepository';
+
   final AccountRemoteService _remoteService;
   final AccountLocalService _localService;
 
@@ -73,6 +76,15 @@ class AccountRepositoryImpl implements AccountRepository {
       );
     } on RestApiException catch (e) {
       return left(AccountFailure.api(e.errorCode, e.message));
+    }
+  }
+
+  @override
+  Future<void> deleteUserStore() async {
+    try {
+      await _localService.deleteUserStore();
+    } on PlatformException catch (e) {
+      Logger.e(tag, e.message);
     }
   }
 }

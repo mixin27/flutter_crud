@@ -12,6 +12,7 @@ export 'core/infrastructure/repository/account_repository_impl.dart';
 export 'core/application/get_profile_notifier.dart';
 export 'core/application/update_profile_notifier.dart';
 export 'core/application/change_password_notifier.dart';
+export 'core/application/delete_user_store_notifier.dart';
 
 export 'core/shared/account_providers.dart';
 
