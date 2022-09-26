@@ -18,6 +18,8 @@ class CategoryRepositoryImpl implements CategoryRepository {
         await result.when(
           noConnection: () async {
             final localItems = await _localService.getAll();
+            if (localItems.isEmpty) return const DomainResult.noConnection();
+
             return DomainResult.result(localItems.domainList);
           },
           withData: (data) async {
