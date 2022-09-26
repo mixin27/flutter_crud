@@ -53,9 +53,12 @@ class _LoginFormState extends State<LoginForm> {
                 validator: emailValidator,
                 enabled: !isLoading,
                 readOnly: isLoading,
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.email_outlined),
-                  label: Text('Email or phone number'),
+                decoration: InputDecoration(
+                  prefixIcon: const Icon(Icons.email_outlined),
+                  label: const Text('Email or phone number'),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
                 ),
               ),
               const SizedBox(height: 20),
@@ -69,6 +72,9 @@ class _LoginFormState extends State<LoginForm> {
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.lock_outline),
                   label: const Text('Password'),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
                   suffixIcon: GestureDetector(
                     onTap: () {
                       ref.read(obscureTextProvider.notifier).state =

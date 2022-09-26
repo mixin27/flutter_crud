@@ -59,9 +59,12 @@ class _RegisterFormState extends State<RegisterForm> {
                 validator: nameValidator,
                 enabled: !isLoading,
                 readOnly: isLoading,
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.person_outline),
-                  label: Text('Name'),
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  prefixIcon: const Icon(Icons.person_outline),
+                  label: const Text('Name'),
                 ),
               ),
               const SizedBox(height: 20),
@@ -71,9 +74,12 @@ class _RegisterFormState extends State<RegisterForm> {
                 validator: emailValidator,
                 enabled: !isLoading,
                 readOnly: isLoading,
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.email_outlined),
-                  label: Text('Email'),
+                decoration: InputDecoration(
+                  prefixIcon: const Icon(Icons.email_outlined),
+                  label: const Text('Email'),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
                 ),
               ),
               const SizedBox(height: 20),
@@ -83,9 +89,12 @@ class _RegisterFormState extends State<RegisterForm> {
                 validator: phoneValidator,
                 enabled: !isLoading,
                 readOnly: isLoading,
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.phone_outlined),
-                  label: Text('Phone number'),
+                decoration: InputDecoration(
+                  prefixIcon: const Icon(Icons.phone_outlined),
+                  label: const Text('Phone number'),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
                 ),
               ),
               const SizedBox(height: 20),
@@ -99,6 +108,9 @@ class _RegisterFormState extends State<RegisterForm> {
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.lock_outline),
                   label: const Text('Password'),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
                   suffixIcon: GestureDetector(
                     onTap: () {
                       ref.read(obscureTextProvider.notifier).state =
