@@ -13,13 +13,13 @@ class GetAllPostsState with _$GetAllPostsState {
   const factory GetAllPostsState.loading(
     PaginatedResult<List<PostModel>> posts,
     int itemsPerPage,
-  ) = _loading;
+  ) = _Loading;
   const factory GetAllPostsState.noConnection(
     PaginatedResult<List<PostModel>> posts,
-  ) = _noConnection;
+  ) = _NoConnection;
   const factory GetAllPostsState.empty(
     PaginatedResult<List<PostModel>> posts,
-  ) = _empty;
+  ) = _Empty;
   const factory GetAllPostsState.success(
     PaginatedResult<List<PostModel>> posts, {
     required bool isNextPageAvailbale,
