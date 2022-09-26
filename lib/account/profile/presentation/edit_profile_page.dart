@@ -131,6 +131,8 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                     controller: nameController,
                     keyboardType: TextInputType.name,
                     validator: nameValidator,
+                    enabled: !_isLoading,
+                    readOnly: _isLoading,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       label: Text(AppStrings.name),
@@ -149,6 +151,8 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                     controller: emailController,
                     keyboardType: TextInputType.emailAddress,
                     validator: emailValidator,
+                    enabled: !_isLoading,
+                    readOnly: _isLoading,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       label: Text(AppStrings.email),
@@ -167,6 +171,8 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                     controller: phoneController,
                     keyboardType: TextInputType.phone,
                     validator: phoneValidator,
+                    enabled: !_isLoading,
+                    readOnly: _isLoading,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       label: Text(AppStrings.phone),
@@ -185,6 +191,8 @@ class _EditProfilePageState extends ConsumerState<EditProfilePage> {
                     controller: descriptionController,
                     keyboardType: TextInputType.multiline,
                     maxLines: 6,
+                    enabled: !_isLoading,
+                    readOnly: _isLoading,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       hintText: 'Write something',

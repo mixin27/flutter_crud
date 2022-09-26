@@ -51,6 +51,8 @@ class _LoginFormState extends State<LoginForm> {
                 controller: emailController,
                 keyboardType: TextInputType.emailAddress,
                 validator: emailValidator,
+                enabled: !isLoading,
+                readOnly: isLoading,
                 decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.email_outlined),
                   label: Text('Email or phone number'),
@@ -62,6 +64,8 @@ class _LoginFormState extends State<LoginForm> {
                 obscureText: obscureText,
                 keyboardType: TextInputType.visiblePassword,
                 validator: passwordValidator,
+                enabled: !isLoading,
+                readOnly: isLoading,
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.lock_outline),
                   label: const Text('Password'),

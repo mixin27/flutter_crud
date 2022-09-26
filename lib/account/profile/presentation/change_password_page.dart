@@ -107,6 +107,8 @@ class _ChangePasswordPageState extends ConsumerState<ChangePasswordPage> {
                     keyboardType: TextInputType.visiblePassword,
                     validator: passwordValidator,
                     obscureText: obscureText,
+                    enabled: !_isLoading,
+                    readOnly: _isLoading,
                     decoration: const InputDecoration(
                       prefixIcon: Icon(Icons.lock_outline),
                       label: Text('Old Password'),
@@ -127,6 +129,8 @@ class _ChangePasswordPageState extends ConsumerState<ChangePasswordPage> {
                     keyboardType: TextInputType.visiblePassword,
                     validator: passwordValidator,
                     obscureText: obscureText,
+                    enabled: !_isLoading,
+                    readOnly: _isLoading,
                     decoration: InputDecoration(
                       prefixIcon: const Icon(Icons.lock_outline),
                       label: const Text('New Password'),

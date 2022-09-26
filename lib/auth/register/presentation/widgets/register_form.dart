@@ -57,6 +57,8 @@ class _RegisterFormState extends State<RegisterForm> {
                 controller: nameController,
                 keyboardType: TextInputType.name,
                 validator: nameValidator,
+                enabled: !isLoading,
+                readOnly: isLoading,
                 decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.person_outline),
                   label: Text('Name'),
@@ -67,6 +69,8 @@ class _RegisterFormState extends State<RegisterForm> {
                 controller: emailController,
                 keyboardType: TextInputType.emailAddress,
                 validator: emailValidator,
+                enabled: !isLoading,
+                readOnly: isLoading,
                 decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.email_outlined),
                   label: Text('Email'),
@@ -77,6 +81,8 @@ class _RegisterFormState extends State<RegisterForm> {
                 controller: phoneController,
                 keyboardType: TextInputType.phone,
                 validator: phoneValidator,
+                enabled: !isLoading,
+                readOnly: isLoading,
                 decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.phone_outlined),
                   label: Text('Phone number'),
@@ -88,6 +94,8 @@ class _RegisterFormState extends State<RegisterForm> {
                 obscureText: obscureText,
                 keyboardType: TextInputType.visiblePassword,
                 validator: passwordValidator,
+                enabled: !isLoading,
+                readOnly: isLoading,
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.lock_outline),
                   label: const Text('Password'),
