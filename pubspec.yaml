@@ -24,6 +24,8 @@ dependencies:
   cached_network_image: ^3.2.2
   image_picker: ^0.8.5+3
   path_drawing: ^1.0.1
+  path: ^1.8.2
+  path_provider: ^2.0.11
 
   # routing and navigation
   auto_route: ^5.0.1

@@ -18,6 +18,7 @@ export 'shared/providers/theme_providers.dart';
 // infrastructure
 export 'infrastructure/response_dto.dart';
 export 'infrastructure/error_response_dto.dart';
+export 'infrastructure/sembast_database.dart';
 
 // presentation
 export 'presentation/app_logo.dart';

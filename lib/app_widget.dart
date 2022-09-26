@@ -11,7 +11,10 @@ import 'package:smf_core/smf_core.dart';
 
 final initializationProvider = FutureProvider<Unit>(
   (ref) async {
-    // initialization stuffs
+    // Sembast init
+    await ref.read(sembastProvider).init();
+
+    // Dio config
     ref.read(dioProvider)
       ..options = BaseOptions(
         baseUrl: Env.uatBaseUrl,
