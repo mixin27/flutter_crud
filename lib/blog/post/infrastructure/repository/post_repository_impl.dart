@@ -4,8 +4,9 @@ import 'package:smf_core/smf_core.dart';
 
 class PostRepositoryImpl implements PostRepository {
   final PostRemoteService _remoteService;
+  final PostLocalService _localService;
 
-  PostRepositoryImpl(this._remoteService);
+  PostRepositoryImpl(this._remoteService, this._localService);
 
   @override
   Future<Either<BlogFailure, DomainResult<PostModel>>> createPost(
@@ -52,6 +53,7 @@ class PostRepositoryImpl implements PostRepository {
   @override
   Future<Either<BlogFailure, PaginatedResult<List<PostModel>>>> getAllPosts(
       PostRequestParam param) async {
+    final page = param.pageNo ?? 0;
     try {
       final result = await _remoteService.getAllPosts(
         param: PostRequestParamDto.fromDomain(param),
@@ -59,14 +61,21 @@ class PostRepositoryImpl implements PostRepository {
 
       return right(
         await result.when(
-          noConnection: () => const PaginatedResult(
-            entity: [],
-            isNextPageAvailable: true,
-          ),
-          withData: (_) => PaginatedResult(
-            entity: _.posts.domainList,
-            isNextPageAvailable: _.page < _.total,
-          ),
+          noConnection: () async {
+            final localItems = await _localService.getPage(page);
+            return PaginatedResult(
+              entity: localItems.domainList,
+              isNextPageAvailable:
+                  (page + 1) < await _localService.getLocalPageCount(),
+            );
+          },
+          withData: (_) async {
+            await _localService.upsertPage(_.posts, page);
+            return PaginatedResult(
+              entity: _.posts.domainList,
+              isNextPageAvailable: (page + 1) < _.total,
+            );
+          },
         ),
       );
     } on RestApiException catch (e) {
