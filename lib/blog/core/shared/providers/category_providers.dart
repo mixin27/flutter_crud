@@ -9,12 +9,15 @@ final categoryRemoteServiceProvider = Provider(
 );
 
 final categoryLocalServiceProvider = Provider(
-  (ref) => CategoryLocalService(),
+  (ref) => CategoryLocalService(
+    ref.watch(sembastProvider),
+  ),
 );
 
 final categoryRepositoryProvider = Provider<CategoryRepository>(
   (ref) => CategoryRepositoryImpl(
     ref.watch(categoryRemoteServiceProvider),
+    ref.watch(categoryLocalServiceProvider),
   ),
 );
 

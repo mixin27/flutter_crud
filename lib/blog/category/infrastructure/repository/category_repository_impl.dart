@@ -4,8 +4,9 @@ import 'package:smf_core/smf_core.dart';
 
 class CategoryRepositoryImpl implements CategoryRepository {
   final CategoryRemoteService _remoteService;
+  final CategoryLocalService _localService;
 
-  CategoryRepositoryImpl(this._remoteService);
+  CategoryRepositoryImpl(this._remoteService, this._localService);
 
   @override
   Future<Either<BlogFailure, DomainResult<List<CategoryModel>>>>
@@ -15,8 +16,16 @@ class CategoryRepositoryImpl implements CategoryRepository {
 
       return right(
         await result.when(
-          noConnection: () => const DomainResult.noConnection(),
-          withData: (data) => DomainResult.result(data.domainList),
+          noConnection: () async {
+            final localItems = await _localService.getAll();
+            if (localItems.isEmpty) return const DomainResult.noConnection();
+
+            return DomainResult.result(localItems.domainList);
+          },
+          withData: (data) async {
+            await _localService.upsert(data);
+            return DomainResult.result(data.domainList);
+          },
         ),
       );
     } on RestApiException catch (e) {

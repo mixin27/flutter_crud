@@ -60,10 +60,13 @@ class _PostDetailPageState extends ConsumerState<PostDetailPage> {
         loading: (_) => const Center(
           child: CircularProgressIndicator.adaptive(),
         ),
-        noConnection: (_) => ErrorPlaceholderWidget(
-          message: AppStrings.connectionProblem,
-          icon: Icons.wifi_off,
-          onPressed: getSinglePost,
+        noConnection: (_) => SizedBox(
+          width: double.infinity,
+          child: ErrorPlaceholderWidget(
+            message: AppStrings.connectionProblem,
+            icon: Icons.wifi_off,
+            onPressed: getSinglePost,
+          ),
         ),
         success: (_) {
           final post = _.post;
@@ -131,10 +134,13 @@ class _PostDetailPageState extends ConsumerState<PostDetailPage> {
             ),
           );
         },
-        error: (_) => ErrorPlaceholderWidget(
-          message: _.failure.message ?? AppStrings.unknownError,
-          icon: Icons.newspaper,
-          onPressed: getSinglePost,
+        error: (_) => SizedBox(
+          width: double.infinity,
+          child: ErrorPlaceholderWidget(
+            message: _.failure.message ?? AppStrings.unknownError,
+            icon: Icons.newspaper,
+            onPressed: getSinglePost,
+          ),
         ),
       ),
     );

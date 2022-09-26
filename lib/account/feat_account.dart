@@ -5,12 +5,14 @@ export 'core/domain/user_model.dart';
 
 export 'core/infrastructure/models/user_dto.dart';
 export 'core/infrastructure/service/account_remote_service.dart';
+export 'core/infrastructure/service/account_local_service.dart';
 export 'core/infrastructure/repository/account_repository.dart';
 export 'core/infrastructure/repository/account_repository_impl.dart';
 
 export 'core/application/get_profile_notifier.dart';
 export 'core/application/update_profile_notifier.dart';
 export 'core/application/change_password_notifier.dart';
+export 'core/application/delete_user_store_notifier.dart';
 
 export 'core/shared/account_providers.dart';
 

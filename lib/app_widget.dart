@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_crud/account/feat_account.dart';
 import 'package:flutter_crud/auth/feat_auth.dart';
 import 'package:flutter_crud/blog/feat_blog.dart';
 import 'package:flutter_crud/core/feat_core.dart';
@@ -11,7 +12,10 @@ import 'package:smf_core/smf_core.dart';
 
 final initializationProvider = FutureProvider<Unit>(
   (ref) async {
-    // initialization stuffs
+    // Sembast init
+    await ref.read(sembastProvider).init();
+
+    // Dio config
     ref.read(dioProvider)
       ..options = BaseOptions(
         baseUrl: Env.uatBaseUrl,
@@ -51,6 +55,8 @@ class AppWidget extends ConsumerWidget {
           _appRouter.replaceAll([const EmptyHomeRoute()]);
         },
         unauthenticated: () {
+          ref.read(deleteUserStoreNotifierProvider.notifier).deleteUserStore();
+
           _appRouter.replaceAll([const EmptyAuthRoute()]);
         },
       );

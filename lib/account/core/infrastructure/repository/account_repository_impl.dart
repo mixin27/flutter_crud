@@ -1,11 +1,15 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_crud/account/feat_account.dart';
 import 'package:smf_core/smf_core.dart';
 
 class AccountRepositoryImpl implements AccountRepository {
-  final AccountRemoteService _remoteService;
+  static const String tag = 'AccountRepository';
 
-  AccountRepositoryImpl(this._remoteService);
+  final AccountRemoteService _remoteService;
+  final AccountLocalService _localService;
+
+  AccountRepositoryImpl(this._remoteService, this._localService);
 
   @override
   Future<Either<AccountFailure, DomainResult<UserModel>>> getProfile() async {
@@ -14,8 +18,15 @@ class AccountRepositoryImpl implements AccountRepository {
 
       return right(
         await result.when(
-          noConnection: () => const DomainResult.noConnection(),
-          withData: (user) => DomainResult.result(user.domainModel),
+          noConnection: () async {
+            final localItem = await _localService.getUser();
+            if (localItem == null) return const DomainResult.noConnection();
+            return DomainResult.result(localItem.domainModel);
+          },
+          withData: (user) async {
+            await _localService.upsertUser(user);
+            return DomainResult.result(user.domainModel);
+          },
         ),
       );
     } on RestApiException catch (e) {
@@ -65,6 +76,15 @@ class AccountRepositoryImpl implements AccountRepository {
       );
     } on RestApiException catch (e) {
       return left(AccountFailure.api(e.errorCode, e.message));
+    }
+  }
+
+  @override
+  Future<void> deleteUserStore() async {
+    try {
+      await _localService.deleteUserStore();
+    } on PlatformException catch (e) {
+      Logger.e(tag, e.message);
     }
   }
 }

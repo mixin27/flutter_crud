@@ -57,70 +57,86 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
           ),
         ],
       ),
-      body: profileState.map(
-        initial: (_) => const SizedBox(),
-        loading: (_) => const Center(
-          child: CircularProgressIndicator.adaptive(),
-        ),
-        noConnection: (_) => ErrorPlaceholderWidget(
-          message: AppStrings.connectionProblem,
-          icon: Icons.wifi_off,
-          onPressed: getProfile,
-        ),
-        success: (_) {
-          final user = _.user;
-
-          return RefreshIndicator(
-            onRefresh: () async {
-              getProfile();
-              getUserPosts();
-            },
-            child: ListView(
-              physics: const BouncingScrollPhysics(
-                parent: AlwaysScrollableScrollPhysics(),
-              ),
-              children: [
-                UserInfoCard(user: user),
-                const SizedBox(height: 20),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Text(
-                    'Your articles',
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
-                ),
-                const SizedBox(height: 10),
-                articleState.map(
-                  initial: (_) => const SizedBox(),
-                  loading: (_) =>
-                      const Center(child: CircularProgressIndicator.adaptive()),
-                  noConnection: (_) => const SizedBox(),
-                  empty: (_) => const SizedBox(),
-                  success: (_) {
-                    final items = _.posts;
-                    return ListView.separated(
-                      separatorBuilder: (_, __) => const Divider(),
-                      shrinkWrap: true,
-                      primary: false,
-                      itemCount: items.length,
-                      itemBuilder: (context, index) {
-                        final article = items.elementAt(index);
-                        return PostListItem(post: article);
-                      },
-                    );
-                  },
-                  error: (_) => const SizedBox(),
-                ),
-              ],
-            ),
-          );
+      body: RefreshIndicator(
+        onRefresh: () async {
+          getProfile();
+          getUserPosts();
         },
-        error: (_) => ErrorPlaceholderWidget(
-          message: _.failure.message ?? AppStrings.unknownError,
-          icon: Icons.person_rounded,
-          onPressed: getProfile,
+        child: ListView(
+          physics: const BouncingScrollPhysics(
+            parent: AlwaysScrollableScrollPhysics(),
+          ),
+          children: [
+            profileState.maybeMap(
+              orElse: () => const SizedBox(),
+              success: (_) {
+                final user = _.user;
+                return Column(
+                  children: [
+                    UserInfoCard(user: user),
+                    const SizedBox(height: 20),
+                  ],
+                );
+              },
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Text(
+                'Your articles',
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            articleState.map(
+              initial: (_) => const SizedBox(),
+              loading: (_) =>
+                  const Center(child: CircularProgressIndicator.adaptive()),
+              noConnection: (_) => SizedBox(
+                width: double.infinity,
+                child: ErrorPlaceholderWidget(
+                  message: AppStrings.connectionProblem,
+                  icon: Icons.wifi_off,
+                  onPressed: () {
+                    getProfile();
+                    getUserPosts();
+                  },
+                ),
+              ),
+              empty: (_) => const SizedBox(
+                width: double.infinity,
+                child: ErrorPlaceholderWidget(
+                  message: 'No articles found.',
+                  icon: Icons.newspaper,
+                ),
+              ),
+              success: (_) {
+                final items = _.posts;
+                return ListView.separated(
+                  separatorBuilder: (_, __) => const Divider(),
+                  shrinkWrap: true,
+                  primary: false,
+                  itemCount: items.length,
+                  itemBuilder: (context, index) {
+                    final article = items.elementAt(index);
+                    return PostListItem(post: article);
+                  },
+                );
+              },
+              error: (_) => SizedBox(
+                width: double.infinity,
+                child: ErrorPlaceholderWidget(
+                  message: _.failure.message ?? AppStrings.unknownError,
+                  icon: Icons.newspaper,
+                  onPressed: () {
+                    getProfile();
+                    getUserPosts();
+                  },
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

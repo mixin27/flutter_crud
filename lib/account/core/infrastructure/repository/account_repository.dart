@@ -19,4 +19,7 @@ abstract class AccountRepository {
     required String oldPassword,
     required String newPassword,
   });
+
+  /// Delete user store.
+  Future<void> deleteUserStore();
 }

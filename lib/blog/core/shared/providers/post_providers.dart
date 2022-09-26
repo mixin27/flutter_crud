@@ -3,7 +3,9 @@ import 'package:flutter_crud/core/feat_core.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final postLocalServiceProvider = Provider(
-  (ref) => PostLocalService(),
+  (ref) => PostLocalService(
+    ref.watch(sembastProvider),
+  ),
 );
 
 final postRemoteServiceProvider = Provider(
@@ -15,6 +17,7 @@ final postRemoteServiceProvider = Provider(
 final postRepositoryProvider = Provider<PostRepository>(
   (ref) => PostRepositoryImpl(
     ref.watch(postRemoteServiceProvider),
+    ref.watch(postLocalServiceProvider),
   ),
 );
 
