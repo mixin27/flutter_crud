@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_crud/auth/feat_auth.dart';
 import 'package:flutter_crud/core/feat_core.dart';
-import 'package:smf_core/smf_core.dart';
+import 'package:smf_core/smf_core.dart' hide Credential;
 
 class UserAuthenticator {
   // ignore: unused_field

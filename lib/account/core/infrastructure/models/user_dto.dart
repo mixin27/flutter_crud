@@ -1,5 +1,4 @@
 import 'package:flutter_crud/account/feat_account.dart';
-import 'package:flutter_crud/core/feat_core.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:smf_core/smf_core.dart';
 

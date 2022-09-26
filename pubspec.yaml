@@ -16,7 +16,7 @@ dependencies:
   intl: ^0.17.0
   dartz: ^0.10.1
   form_field_validator: ^1.1.0
-  smf_core: ^1.0.1
+  smf_core: ^1.0.5
   carousel_slider: ^4.1.1
   smooth_page_indicator: ^1.0.0+2
   google_fonts: ^3.0.1

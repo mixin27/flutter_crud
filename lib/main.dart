@@ -7,7 +7,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // initialization prefs
-  await initialize();
+  await initializePrefs();
 
   runApp(
     ProviderScope(

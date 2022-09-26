@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_crud/auth/feat_auth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:smf_core/smf_core.dart';
+import 'package:smf_core/smf_core.dart' hide Credential;
 
 class SecureCredentialStorage implements CredentialStorage {
   final FlutterSecureStorage _storage;
