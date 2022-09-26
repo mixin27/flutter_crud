@@ -118,6 +118,8 @@ class _NewCategoryFormState extends ConsumerState<NewCategoryForm> {
           TextFormField(
             controller: nameController,
             validator: nameValidator,
+            enabled: !isLoading,
+            readOnly: isLoading,
             decoration: InputDecoration(
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),

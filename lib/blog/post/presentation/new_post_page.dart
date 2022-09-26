@@ -179,6 +179,8 @@ class _NewArticleFormState extends ConsumerState<NewArticleForm> {
           TextFormField(
             controller: titleController,
             validator: titleValidator,
+            enabled: !isLoading,
+            readOnly: isLoading,
             decoration: InputDecoration(
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
@@ -196,6 +198,8 @@ class _NewArticleFormState extends ConsumerState<NewArticleForm> {
             controller: contentController,
             validator: contentValidator,
             maxLines: 8,
+            enabled: !isLoading,
+            readOnly: isLoading,
             decoration: InputDecoration(
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
