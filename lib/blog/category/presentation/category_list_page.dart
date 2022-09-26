@@ -146,7 +146,7 @@ class _CategoryListPageState extends ConsumerState<CategoryListPage> {
                                 ref
                                     .read(
                                         deleteCategoryNotifierProvider.notifier)
-                                    .deleteCategoryById(id: 'category.id');
+                                    .deleteCategoryById(id: category.id);
                               },
                               child: const Text(AppStrings.delete),
                             ),

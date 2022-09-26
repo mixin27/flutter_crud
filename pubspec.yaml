@@ -26,6 +26,7 @@ dependencies:
   path_drawing: ^1.0.1
   path: ^1.8.2
   path_provider: ^2.0.11
+  collection: ^1.16.0
 
   # routing and navigation
   auto_route: ^5.0.1
