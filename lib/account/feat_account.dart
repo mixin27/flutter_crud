@@ -5,6 +5,7 @@ export 'core/domain/user_model.dart';
 
 export 'core/infrastructure/models/user_dto.dart';
 export 'core/infrastructure/service/account_remote_service.dart';
+export 'core/infrastructure/service/account_local_service.dart';
 export 'core/infrastructure/repository/account_repository.dart';
 export 'core/infrastructure/repository/account_repository_impl.dart';
 
