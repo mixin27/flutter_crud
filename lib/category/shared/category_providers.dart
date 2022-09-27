@@ -2,8 +2,14 @@ import 'package:flutter_crud/category/feat_category.dart';
 import 'package:flutter_crud/core/feat_core.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+final categoryDaoProvider = Provider(
+  (ref) => ref.watch(appFloorDBProvider).instance.categoryDao,
+);
+
 final categoryLocalService = Provider(
-  (ref) => CategoryLocalService(),
+  (ref) => CategoryLocalService(
+    ref.watch(categoryDaoProvider),
+  ),
 );
 
 final categoryRemoteService = Provider(
