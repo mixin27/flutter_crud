@@ -25,7 +25,13 @@ class RegisterPage extends ConsumerWidget {
               parent: AlwaysScrollableScrollPhysics(),
             ),
             children: [
-              const SizedBox(height: 64),
+              const SizedBox(height: 20),
+              Row(
+                children: const [
+                  AutoLeadingButton(),
+                ],
+              ),
+              const SizedBox(height: 20),
               Text(
                 'Welcome to\nBlogs',
                 style: Theme.of(context).textTheme.headline4?.copyWith(
