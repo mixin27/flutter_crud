@@ -9,3 +9,7 @@ export 'infrastructure/respository/category_repository_impl.dart';
 export 'infrastructure/extensions.dart';
 
 export 'application/get_all_categories_notifier.dart';
+
+export 'shared/category_providers.dart';
+
+export 'presentation/category_list_page.dart';

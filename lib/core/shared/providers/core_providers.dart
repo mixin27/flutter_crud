@@ -8,5 +8,8 @@ final dioProvider = Provider(
     ..options = BaseOptions(
       baseUrl: Env.uatBaseUrl,
       contentType: ApiUtils.formUrlEncoded,
+      headers: {
+        "apiKey": Env.apiKey,
+      },
     ),
 );
