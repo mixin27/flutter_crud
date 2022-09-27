@@ -1,14 +1,16 @@
 import 'dart:async';
 import 'package:floor/floor.dart';
+import 'package:flutter_crud/article/feat_article.dart';
 import 'package:flutter_crud/category/feat_category.dart';
 import 'package:smf_core/smf_core.dart';
 import 'package:sqflite/sqflite.dart' as sqflite;
 
 part 'app_database.g.dart';
 
-@Database(version: 1, entities: [CategoryDto])
+@Database(version: 1, entities: [CategoryDto, ArticleDto])
 abstract class AppDatabase extends FloorDatabase {
   CategoryDao get categoryDao;
+  ArticleDao get articleDao;
 }
 
 class AppFloorDB {
