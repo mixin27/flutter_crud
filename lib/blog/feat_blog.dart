@@ -11,3 +11,6 @@ export 'category/feat_category.dart';
 
 // post
 export 'post/feat_post.dart';
+
+// bookmark
+// TODO: export feat/bookmark
