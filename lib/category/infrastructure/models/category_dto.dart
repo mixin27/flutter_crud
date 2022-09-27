@@ -6,6 +6,7 @@ import 'package:smf_core/smf_core.dart';
 part 'category_dto.g.dart';
 
 @JsonSerializable()
+@Entity(tableName: 'categories')
 class CategoryDto {
   @JsonKey(name: 'PostCategoryID', fromJson: stringFromJson)
   @ColumnInfo(name: 'id')

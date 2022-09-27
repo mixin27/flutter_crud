@@ -20,3 +20,5 @@ export 'presentation/app_logo.dart';
 
 // presentation/button
 export 'presentation/button/app_state_button.dart';
+
+export 'infrastructure/app_database.dart';

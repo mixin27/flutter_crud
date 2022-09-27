@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_crud/core/feat_core.dart';
 import 'package:flutter_crud/env.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:smf_core/smf_core.dart';
@@ -12,4 +13,8 @@ final dioProvider = Provider(
         "apiKey": Env.apiKey,
       },
     ),
+);
+
+final appFloorDBProvider = Provider(
+  (ref) => AppFloorDB(),
 );

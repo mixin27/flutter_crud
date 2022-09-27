@@ -6,7 +6,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final initializationProvider = FutureProvider<Unit>(
   (ref) async {
-    // initialization stuffs
+    // initialize floor database
+    await ref.read(appFloorDBProvider).init();
+
     return unit;
   },
 );
